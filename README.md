@@ -1,2 +1,4 @@
-Main branch will be for approved changes only.
-Create your own branches to avoid any issues later.
+Starting the game:
+
+1. Start the server.
+2. Run different clients.
