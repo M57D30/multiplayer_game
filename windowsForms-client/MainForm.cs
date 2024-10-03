@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -12,8 +14,8 @@ namespace windowsForms_client
     public partial class MainForm : Form
     {
         private ClientWebSocket clientSocket;
-        private string playerId;
-        private ConcurrentDictionary<string, (int x, int y)> otherPlayers = new ConcurrentDictionary<string, (int, int)>();
+        Tank CurrentTank;
+        private List<Tank> otherPlayers = new List<Tank>();
 
         public MainForm()
         {
@@ -28,11 +30,11 @@ namespace windowsForms_client
             await clientSocket.ConnectAsync(new Uri("ws://localhost:5000/ws"), CancellationToken.None);
             Console.WriteLine("Connected to server");
 
-            playerId = clientSocket.GetHashCode().ToString(); // Get playerId from WebSocket hashcode
+            string playerId = clientSocket.GetHashCode().ToString(); // Get playerId from WebSocket hashcode
 
             // Initialize the player's position
-            otherPlayers[playerId] = (100, 100); // Start at (100, 100)
-
+            CurrentTank = new Tank(playerId, 100, 100);
+            otherPlayers.Add(CurrentTank);
             Invalidate();
             await SendPlayerPosition();
             await ReceiveUpdates();
@@ -46,21 +48,21 @@ namespace windowsForms_client
             if (e.KeyCode == Keys.Left) movement.x = -10;
             if (e.KeyCode == Keys.Right) movement.x = 10;
 
-            // Get the current player position
-            var currentPosition = otherPlayers[playerId];
+            //// Get the current player position
+            var currentPosition = otherPlayers.FirstOrDefault(tank => tank.playerId == this.CurrentTank.playerId);
 
-            // Calculate the new position
-            int newX = currentPosition.x + movement.x;
-            int newY = currentPosition.y + movement.y;
-
+            //// Calculate the new position
+            int newX = currentPosition.x_coordinate + movement.x;
+            int newY = currentPosition.y_coordinate + movement.y;
+           
             // Clamp the new position to stay within the form's bounds
             // Assuming the player size is 50x50 (as you use in OnPaint) and the form's client area is used
             newX = Math.Max(0, Math.Min(newX, ClientSize.Width - 50));
             newY = Math.Max(0, Math.Min(newY, ClientSize.Height - 50));
 
             // Update the player's position
-            otherPlayers[playerId] = (newX, newY);
-
+            otherPlayers.FirstOrDefault(tank => tank.playerId == this.CurrentTank.playerId).x_coordinate = newX;
+            otherPlayers.FirstOrDefault(tank => tank.playerId == this.CurrentTank.playerId).y_coordinate = newY;
             Invalidate(); // Force re-draw to immediately show changes
             SendPlayerPosition();
         }
@@ -70,8 +72,8 @@ namespace windowsForms_client
 
         private async Task SendPlayerPosition()
         {
-            var currentPosition = otherPlayers[playerId];
-            string message = $"{playerId},{currentPosition.x},{currentPosition.y}";
+            var currentPosition = otherPlayers.FirstOrDefault(tank => tank.playerId == this.CurrentTank.playerId);
+            string message = $"{this.CurrentTank.playerId},{currentPosition.x_coordinate},{currentPosition.y_coordinate}";
             var buffer = Encoding.UTF8.GetBytes(message);
             await clientSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
         }
@@ -90,8 +92,16 @@ namespace windowsForms_client
                 int y = int.Parse(parts[2]);
 
                 // Update position for other players
-                otherPlayers[otherPlayerId] = (x, y);
-
+                if (otherPlayers.Any(tank => tank.playerId == otherPlayerId))
+                {
+                    otherPlayers.FirstOrDefault(tank => tank.playerId == otherPlayerId).x_coordinate = x;
+                    otherPlayers.FirstOrDefault(tank => tank.playerId == otherPlayerId).y_coordinate = y;
+                }
+                else
+                {
+                    Tank newTank = new Tank(otherPlayerId, x, y);
+                    otherPlayers.Add(newTank);
+                }
                 // Redraw the form to update the view
                 Invalidate();
             }
@@ -105,7 +115,7 @@ namespace windowsForms_client
             // Draw all players, including the current player
             foreach (var player in otherPlayers)
             {
-                e.Graphics.FillRectangle(System.Drawing.Brushes.Blue, player.Value.x, player.Value.y, 50, 50);
+                e.Graphics.FillRectangle(System.Drawing.Brushes.Blue, player.x_coordinate, player.y_coordinate, 50, 50);
             }
         }
     }
