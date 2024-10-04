@@ -7,3 +7,12 @@ C:\Users\vyten\Desktop\GAME\windowsForms-client\obj\Debug\windowsForms-client.cs
 C:\Users\vyten\Desktop\GAME\windowsForms-client\obj\Debug\windowsForms-client.csproj.CoreCompileInputs.cache
 C:\Users\vyten\Desktop\GAME\windowsForms-client\obj\Debug\windowsForms-client.exe
 C:\Users\vyten\Desktop\GAME\windowsForms-client\obj\Debug\windowsForms-client.pdb
+C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\bin\Debug\windowsForms-client.exe.config
+C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\bin\Debug\windowsForms-client.exe
+C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\bin\Debug\windowsForms-client.pdb
+C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.csproj.AssemblyReference.cache
+C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms_client.Properties.Resources.resources
+C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.csproj.GenerateResource.cache
+C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.csproj.CoreCompileInputs.cache
+C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.exe
+C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.pdb
