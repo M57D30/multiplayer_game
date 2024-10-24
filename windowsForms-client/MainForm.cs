@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
 
 namespace windowsForms_client
 
@@ -17,10 +18,15 @@ namespace windowsForms_client
         Tank CurrentTank;
         private List<Tank> otherPlayers = new List<Tank>();
 
+        private int playerVelocityX = 0;
+        private int playerVelocityY = 0;
+        private System.Timers.Timer gameLoopTimer;
+
         public MainForm()
         {
             InitializeComponent();
-            KeyDown += new KeyEventHandler(OnKeyDown); //Kai dabartinis playeris pajuda yra pakeiciama pozicija
+            KeyDown += OnKeyDown;
+            KeyUp += OnKeyUp;
             Task.Run(ConnectWebSocket); // Start WebSocket client
         }
 
@@ -35,38 +41,66 @@ namespace windowsForms_client
             // Initialize the player's position
             CurrentTank = new Tank(playerId, 100, 100);
             otherPlayers.Add(CurrentTank);
-            Invalidate();
-            await SendPlayerPosition();
+
+            BeginGameLoop();
+
             await ReceiveUpdates();
         }
 
+        private void BeginGameLoop()
+        {
+            // Start the game loop (60 FPS -> 16ms interval)
+            gameLoopTimer = new System.Timers.Timer(16);
+            gameLoopTimer.Elapsed += OnGameLoop;
+            gameLoopTimer.AutoReset = true;
+            gameLoopTimer.Start();
+        }
+
+
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            var movement = (x: 0, y: 0);
-            if (e.KeyCode == Keys.Up) movement.y = -10;
-            if (e.KeyCode == Keys.Down) movement.y = 10;
-            if (e.KeyCode == Keys.Left) movement.x = -10;
-            if (e.KeyCode == Keys.Right) movement.x = 10;
+            if (e.KeyCode == Keys.Up) playerVelocityY = -10;
+            if (e.KeyCode == Keys.Down) playerVelocityY = 10;
+            if (e.KeyCode == Keys.Left) playerVelocityX = -10;
+            if (e.KeyCode == Keys.Right) playerVelocityX = 10;
+        }
 
-            //// Get the current player position
-            var currentPosition = otherPlayers.FirstOrDefault(tank => tank.playerId == this.CurrentTank.playerId);
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) playerVelocityY = 0;
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right) playerVelocityX = 0;
+        }
 
-            //// Calculate the new position
-            int newX = currentPosition.x_coordinate + movement.x;
-            int newY = currentPosition.y_coordinate + movement.y;
-           
-            // Clamp the new position to stay within the form's bounds
-            // Assuming the player size is 50x50 (as you use in OnPaint) and the form's client area is used
+
+        private (int x, int y) lastSentPosition;
+
+        private async void OnGameLoop(object sender, ElapsedEventArgs e)
+        {
+
+
+            // Update player position based on velocity
+            var currentPlayer = otherPlayers.FirstOrDefault(tank => tank.playerId == this.CurrentTank.playerId);
+            int newX = currentPlayer.x_coordinate + playerVelocityX;
+            int newY = currentPlayer.y_coordinate + playerVelocityY;
+
+            // Ensure player stays within form bounds
             newX = Math.Max(0, Math.Min(newX, ClientSize.Width - 50));
             newY = Math.Max(0, Math.Min(newY, ClientSize.Height - 50));
 
             // Update the player's position
             otherPlayers.FirstOrDefault(tank => tank.playerId == this.CurrentTank.playerId).x_coordinate = newX;
             otherPlayers.FirstOrDefault(tank => tank.playerId == this.CurrentTank.playerId).y_coordinate = newY;
-            Invalidate(); // Force re-draw to immediately show changes
-            SendPlayerPosition();
-        }
 
+            // Only send the position if it has changed
+            if (newX != lastSentPosition.x || newY != lastSentPosition.y)
+            {
+                lastSentPosition = (newX, newY); // Update the last sent position
+                await SendPlayerPosition();      // Send updated position to the server
+            }
+
+
+            Invalidate();
+        }
 
 
 
@@ -77,6 +111,8 @@ namespace windowsForms_client
             var buffer = Encoding.UTF8.GetBytes(message);
             await clientSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
         }
+
+
 
         private async Task ReceiveUpdates()
         {
