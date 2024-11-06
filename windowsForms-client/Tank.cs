@@ -8,6 +8,8 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Forms;
+using windowsForms_client.Prototype;
 
 namespace windowsForms_client
 {
@@ -18,6 +20,7 @@ namespace windowsForms_client
         public int x_coordinate { get; set; }
         public int y_coordinate { get; set; }
         private string nameOfTheTank { get; set; }
+        private int health { get; set; }
 
         //For movement
         private int playerVelocityX { get ; set; }
@@ -41,8 +44,17 @@ namespace windowsForms_client
         public Color Color { get; protected set; }
 
 
+        public bool IsFrozen { get; private set; }
+        public bool IsBulletFrozen { get; private set; }
+        private System.Timers.Timer freezeTimer = new System.Timers.Timer(3000);
+        private System.Timers.Timer freezebulletsTimer = new System.Timers.Timer(3000);
+
+
         public Tank() 
         {
+            freezeTimer.Elapsed += OnFreezeTimerElapsed;
+            freezebulletsTimer.Elapsed += OnFreezeBulletTimerElapsed;
+
         }
 
         public Tank(string id, int x, int y, string name)
@@ -53,10 +65,43 @@ namespace windowsForms_client
             this.x_coordinate = x;
             this.y_coordinate = y;
             this.nameOfTheTank = name;
+            freezeTimer.Elapsed += OnFreezeTimerElapsed; 
+            freezebulletsTimer.Elapsed += OnFreezeBulletTimerElapsed;
+
         }
+
+        public void StartFreeze()
+        {
+            if (!IsFrozen)
+            {
+                IsFrozen = true;
+                freezeTimer.Start(); // Start the freeze timer
+            }
+        }
+        public void StartBulletFreeze()
+        {
+            if (!IsBulletFrozen)
+            {
+                IsBulletFrozen = true;
+                freezebulletsTimer.Start();
+            }
+        }
+        private void OnFreezeTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            IsFrozen = false;
+            freezeTimer.Stop();
+        }
+        private void OnFreezeBulletTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            IsBulletFrozen = false;
+            freezebulletsTimer.Stop();
+        }
+
+
 
         public void UpdateMovement(int value)
         {
+
             this.MovementSpeedX += value;
             this.MovementSpeedY += value;
         }
@@ -64,6 +109,10 @@ namespace windowsForms_client
         public void UpdateShooting(int value)
         {
             this.bullet.BulletSpeed += value;
+        }
+        public int GetTankSpeedX()
+        {
+            return MovementSpeedX;
         }
 
         public void UpdateHealth(int value)
@@ -105,7 +154,7 @@ namespace windowsForms_client
         public void MoveRight()
         {
             playerVelocityX = Math.Abs(MovementSpeedX);
-            TankBodyLookingDirection = "Right";
+            TankBodyLookingDirection = "Right"; 
         }
 
         public void StopMovementY()
