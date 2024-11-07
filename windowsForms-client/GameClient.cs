@@ -14,14 +14,15 @@ using windowsForms_client.Tanks;
 using System.Text.Json;
 using System.Drawing;
 using System.Runtime.CompilerServices;
+using windowsForms_client.Strategy;
+using windowsForms_client.Factory;
+using windowsForms_client.Prototype;
 
 namespace windowsForms_client
 
 {
     public partial class GameClient : Form
     {
-
-
         private Tank CurrentTank;
         private List<Tank> allPlayers = new List<Tank>();
         private System.Timers.Timer gameLoopTimer;
@@ -32,6 +33,12 @@ namespace windowsForms_client
         private System.Timers.Timer gameTimer;
         private int elapsedSeconds = 0;
 
+        private List<Obstacle> obstacles = new List<Obstacle>();
+
+        private Coin coin;
+
+
+
         public GameClient(string tankType, string selectedUpgrade)
         {
             InitializeComponent();
@@ -41,12 +48,33 @@ namespace windowsForms_client
             gameTimer.Elapsed += OnGameTimerElapsed;
             DisplayTime();
 
+            //InitializeObstacles(); // Call to initialize obstacles
+
             KeyDown += OnKeyDown;
             KeyUp += OnKeyUp;
             webSocketComunication = new WebSocketComunication(tankType, selectedUpgrade, this);
-            this.FormClosing += GameClient_FormClosing; 
+            this.FormClosing += GameClient_FormClosing;
+            InitializeObstacles(); // Call to initialize obstacles
         }
 
+        // Initialize obstacles AND coind
+        public void InitializeObstacles()
+        {
+            ObstacleCreator mistCreator = new MistCreator();
+            ObstacleCreator mudCreator = new MudCreator();
+            ObstacleCreator iceCreator = new IceCreator();
+            ObstacleCreator snowCreator = new SnowCreator();
+
+            obstacles.Add(mistCreator.CreateObstacle(100, 100, new BlindnessStrategy()));
+            obstacles.Add(mistCreator.CreateObstacle(600, 100, new BlindnessStrategy()));
+            obstacles.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));    
+            obstacles.Add(iceCreator.CreateObstacle(600, 350, new FastStrategy()));    
+            obstacles.Add(snowCreator.CreateObstacle(350, 150, new StuckStrategy()));
+
+            coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300));
+
+            Invalidate();
+        }
 
         public void StartCountingTime()
         {
@@ -72,7 +100,6 @@ namespace windowsForms_client
             TimeLabel.Text = $"Time: {elapsedSeconds / 60:D2}:{elapsedSeconds % 60:D2}";
         }
 
-
         public void DisplayGameState(string state)
         {
             if (state == "Start")
@@ -91,7 +118,6 @@ namespace windowsForms_client
             await webSocketComunication.SendAsyncClosing();
         }
 
-
         public void InitializeTank(string tankType, string tankColor, string playerId)
         {
 
@@ -107,6 +133,10 @@ namespace windowsForms_client
                 {
                     CurrentTank = RF.createTommyGunTank(playerId, 600, 200);
                 }
+                if (tankType == "Shotgun")
+                {
+                    CurrentTank = RF.createShotgunTank(playerId, 600, 200);
+                }
 
             } 
             else if (tankColor == "Blue")
@@ -119,6 +149,10 @@ namespace windowsForms_client
                 if (tankType == "TommyGun")
                 {
                     CurrentTank = BF.createTommyGunTank(playerId, 100, 200);
+                }
+                if (tankType == "Shotgun")
+                {
+                    CurrentTank = BF.createShotgunTank(playerId, 100, 200);
                 }
             }
             
@@ -140,18 +174,22 @@ namespace windowsForms_client
         
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Up) CurrentTank.MoveUp();
-            if (e.KeyCode == Keys.Down) CurrentTank.MoveDown();
-            if (e.KeyCode == Keys.Left) CurrentTank.MoveLeft();
-            if (e.KeyCode == Keys.Right) CurrentTank.MoveRight();
+            if (!CurrentTank.IsFrozen)
+            {
+                if (e.KeyCode == Keys.Up) CurrentTank.MoveUp();
+                if (e.KeyCode == Keys.Down) CurrentTank.MoveDown();
+                if (e.KeyCode == Keys.Left) CurrentTank.MoveLeft();
+                if (e.KeyCode == Keys.Right) CurrentTank.MoveRight();
+            }
 
             // Shoot when spacebar is pressed
-            if (e.KeyCode == Keys.Space && !spacebarPressed)
+            if (e.KeyCode == Keys.Space && !spacebarPressed && !CurrentTank.IsBulletFrozen)
             {
                 spacebarPressed = true;
                 CurrentTank.StartShooting();
             }
         }
+
 
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
@@ -160,13 +198,11 @@ namespace windowsForms_client
 
             if (e.KeyCode == Keys.Space)
             {
-
                 CurrentTank.StopShooting(); // Stop shooting when space is released
                 spacebarPressed = false;
             }
         }
        
-
 
         private async void OnGameLoop(object sender, ElapsedEventArgs e)
         {
@@ -174,31 +210,83 @@ namespace windowsForms_client
 
             await this.Shoot();
 
+            if (IsCollidingWithCoin(CurrentTank, coin))
+            {
+                Coin clonedCoin = (Coin)coin.DeepCopy();
+                //GetHashCode(clonedCoin);
+                Console.WriteLine("DeepCopy: ");
+                Console.WriteLine(coin.GetHashCode());
+                Console.WriteLine(clonedCoin.GetHashCode());
+
+                Coin clonedCoin2 = (Coin)coin.ShallowCopy();
+                Console.WriteLine("ShallowCopy: ");
+                Console.WriteLine(coin.GetHashCode());
+                Console.WriteLine(clonedCoin2.GetHashCode());
+
+                clonedCoin.Position.X = new Random().Next(0, 800);
+                clonedCoin.Position.Y = new Random().Next(0, 300);
+
+                coin = clonedCoin;
+            }
         }
 
         private async Task Move()
         {
             CurrentTank.UpdatePosition(ClientSize.Width, ClientSize.Height);
-            
-            //Movement
+
+            foreach (var obstacle in obstacles)
+            {
+                if (IsCollidingWithObstacle(CurrentTank, obstacle))
+                {
+                    if (!obstacle.HasBeenAffected)
+                    {
+                        obstacle.Strategy.ApplyStrategy(CurrentTank);
+                        obstacle.HasBeenAffected = true;
+                    }
+                }
+                else
+                {
+                    if (obstacle.HasBeenAffected)
+                    {
+                        obstacle.HasBeenAffected = false; 
+                    }
+                }
+            }
+
             if (CurrentTank.x_coordinate != lastSentPosition.x || CurrentTank.y_coordinate != lastSentPosition.y)
             {
                 lastSentPosition = (CurrentTank.x_coordinate, CurrentTank.y_coordinate);
                 await webSocketComunication.SendTankInformation(CurrentTank);
             }
-            
         }
+
+
+        private bool IsCollidingWithObstacle(Tank tank, Obstacle obstacle)
+        {
+            Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
+            Rectangle obstacleRect = new Rectangle(obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
+            return tankRect.IntersectsWith(obstacleRect);
+        }
+        private bool IsCollidingWithCoin(Tank tank, Coin coin)
+        {
+            Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
+            Rectangle coinRect = new Rectangle(coin.Position.X, coin.Position.Y, 10, 10);
+            return tankRect.IntersectsWith(coinRect);
+        }
+
 
         private async Task Shoot()
         {
             bool isBullet = false;
             // Shooting
+
             for (int i = CurrentTank.bullets.Count - 1; i >= 0; i--)
             {
+
                 isBullet = true;
                 var bullet = CurrentTank.bullets[i];
-                bullet.Move();
 
+                bullet.Move();
                 // Remove bullet if it's out of bounds
                 if (bullet.X > ClientSize.Width || bullet.X < 0 || bullet.Y > ClientSize.Height || bullet.Y < 0)
                 {
@@ -243,7 +331,8 @@ namespace windowsForms_client
         public void RemovePlayer(string receivedTankId)
         {
             allPlayers.RemoveAll(t => t.playerId == receivedTankId);
-            Invalidate();
+
+            Invalidate(); // Refresh the UI
         }
 
 
@@ -271,21 +360,40 @@ namespace windowsForms_client
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            if (allPlayers != null)
+
+            // Adding obstacles to the game
+            foreach (var obstacle in obstacles)
             {
-                foreach (var player in allPlayers.ToList())
+                if (obstacle is Mist)
                 {
-                   
-                    e.Graphics.FillRectangle(new SolidBrush(player.Color), player.x_coordinate, player.y_coordinate, 50, 50);
-
-                    foreach (var bullet in player.bullets.ToList())
-                    {
-                        e.Graphics.FillRectangle(new SolidBrush(player.Color), bullet.X, bullet.Y, bullet.Width, bullet.Height);
-                    }
-
+                    e.Graphics.FillRectangle(Brushes.LightGray, obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
                 }
-            }     
+                else if (obstacle is Mud)
+                {
+                    e.Graphics.FillRectangle(Brushes.SaddleBrown, obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
+                }
+                else if (obstacle is Ice)
+                {
+                    e.Graphics.FillRectangle(Brushes.LightSteelBlue, obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
+                }
+                else if (obstacle is Snow)
+                {
+                    e.Graphics.FillRectangle(Brushes.LightBlue, obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
+                }
+            }
 
+            //Adding magic coin that does nothing
+            e.Graphics.FillRectangle(Brushes.Gold, coin.Position.X, coin.Position.Y, 10, 10);
+
+            foreach (var player in allPlayers.ToList())
+            {
+                e.Graphics.FillRectangle(new SolidBrush(player.Color), player.x_coordinate, player.y_coordinate, 50, 50);
+
+                foreach (var bullet in player.bullets.ToList())
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(player.Color), bullet.X, bullet.Y, bullet.Width, bullet.Height);
+                }
+            }
         }
 
 
