@@ -11,5 +11,7 @@ namespace windowsForms_client.AbstractFactoryPatternn
         public abstract Tank createPistolTank(string id, int x, int y);
 
         public abstract Tank createTommyGunTank(string id, int x, int y);
+
+        public abstract Tank createShotgunTank(string id, int x, int y);
     }
 }
