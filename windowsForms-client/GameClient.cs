@@ -48,8 +48,6 @@ namespace windowsForms_client
             gameTimer.Elapsed += OnGameTimerElapsed;
             DisplayTime();
 
-            //InitializeObstacles(); // Call to initialize obstacles
-
             KeyDown += OnKeyDown;
             KeyUp += OnKeyUp;
             webSocketComunication = new WebSocketComunication(tankType, selectedUpgrade, this);
@@ -213,6 +211,7 @@ namespace windowsForms_client
             if (IsCollidingWithCoin(CurrentTank, coin))
             {
                 Coin clonedCoin = (Coin)coin.DeepCopy();
+
                 //GetHashCode(clonedCoin);
                 Console.WriteLine("DeepCopy: ");
                 Console.WriteLine(coin.GetHashCode());
@@ -223,6 +222,8 @@ namespace windowsForms_client
                 Console.WriteLine(coin.GetHashCode());
                 Console.WriteLine(clonedCoin2.GetHashCode());
 
+
+                //Coin clonedCoin = (Coin)coin.ShallowCopy();
                 clonedCoin.Position.X = new Random().Next(0, 800);
                 clonedCoin.Position.Y = new Random().Next(0, 300);
 
