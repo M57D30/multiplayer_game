@@ -27,7 +27,7 @@ namespace windowsForms_client.Tanks
         public override void setBullets(int bulletSpeed)
         {
             string Id = Guid.NewGuid().ToString();
-            this.bullet = new Bullet(bulletSpeed, Id);
+            this.bullet = new Bullet(bulletSpeed, Id, 0, 0);
         }
 
         public override void setTurretLookingDirections(string[] directions)

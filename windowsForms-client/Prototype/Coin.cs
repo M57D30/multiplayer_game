@@ -28,5 +28,10 @@ namespace windowsForms_client.Prototype
             clone.Position = new Position(Position.X, Position.Y);
             return clone;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

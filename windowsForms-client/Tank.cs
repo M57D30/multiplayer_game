@@ -182,7 +182,14 @@ namespace windowsForms_client
         }
 
         public abstract void setTurretLookingDirections(string[] directions);
-        public abstract void setBullets(int bulletSpeed);
+        public virtual void setBullets(int bulletSpeed)
+        {
+
+        }
+        public virtual void setBullets(List<Bullet> bulets)
+        {
+
+        }
         public abstract void setShootingMechanism(int bulletSpeed);
         public abstract void ShootInADirection();
         public abstract void Shoot();

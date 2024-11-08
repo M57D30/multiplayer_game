@@ -6,25 +6,27 @@ using System.Threading.Tasks;
 
 namespace windowsForms_client.Tanks
 {
-    internal abstract class PistolTank : Tank
+    internal abstract class ShotgunTank : Tank
     {
+        List<Bullet> shotgunBullets = new List<Bullet>();
 
-        public PistolTank() : base()
-        {
+        public ShotgunTank() 
+        { 
+        
         }
 
-        public PistolTank(string id, int x, int y, string name) : base(id, x, y, name)
-        {   
+        public ShotgunTank(string id, int x, int y, string name) : base(id, x, y, name)
+        { 
+        
         }
 
         public override void setShootingMechanism(int bulletSpeed)
         {
         }
 
-        public override void setBullets(int bulletSpeed)
+        public override void setBullets(List<Bullet> bullets)
         {
-            string Id = Guid.NewGuid().ToString();
-            this.bullet = new Bullet(bulletSpeed, Id, 0, 0);
+            this.shotgunBullets = bullets;
         }
 
         public override void setTurretLookingDirections(string[] directions)
@@ -66,15 +68,14 @@ namespace windowsForms_client.Tanks
         {
             ShootInADirection();
 
-            this.bullet.Direction = TankTurretLookingDirection;
-            this.bullet.SetBaseBulletPosition(x_coordinate, y_coordinate);
-            bullets.Add(this.bullet);
-           
+            foreach (var b in this.shotgunBullets)
+            {
+                b.Direction = TankTurretLookingDirection;
+                b.SetBaseBulletPosition(x_coordinate, y_coordinate);
+                bullets.Add(b);
+            }
+
         }
-
-        
-
-
 
     }
 }

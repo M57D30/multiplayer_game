@@ -11,6 +11,8 @@ namespace windowsForms_client
         public string Id { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public int Y_aditional { get; set; }
+        public int X_aditional { get; set; }
         public int BulletSpeed { get; set; }
         public int Width { get; set; } = 7;
         public int Height { get; set; } = 7;
@@ -19,10 +21,12 @@ namespace windowsForms_client
         public Bullet() { }
 
 
-        public Bullet(int bulletSpeed, string Id)
+        public Bullet(int bulletSpeed, string Id, int y_aditionalHeight, int x_aditionalHeight)
         {
             this.Id = Id;
             this.BulletSpeed = bulletSpeed;
+            this.Y_aditional = y_aditionalHeight;
+            this.X_aditional = x_aditionalHeight;
         }
 
         public void SetBaseBulletPosition(int x_coordinate, int y_coordinate)
@@ -30,22 +34,22 @@ namespace windowsForms_client
             if (Direction == "Right")
             {
                 this.X = x_coordinate + 50;
-                this.Y = y_coordinate + 25;
+                this.Y = y_coordinate + 25 + Y_aditional;
             }
             else if (Direction == "Left")
             {
                 this.X = x_coordinate - 25;
-                this.Y = y_coordinate + 25;
+                this.Y = y_coordinate + 25 + Y_aditional;
             }
             else if (Direction == "Up")
             {
-                this.X = x_coordinate + 25;
-                this.Y = y_coordinate + 25;
+                this.X = x_coordinate + 25 + X_aditional;
+                this.Y = y_coordinate - 10;
             }
             else if (Direction == "Down")
             {
-                this.X = x_coordinate + 25;
-                this.Y = y_coordinate + 25;
+                this.X = x_coordinate + 25 + X_aditional;
+                this.Y = y_coordinate + 50;
             }
         }
 

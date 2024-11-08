@@ -25,5 +25,13 @@ namespace windowsForms_client.AbstractFactoryPatternn.Factorys
 
             return builder.StartNew(blueTommyGunTank).AssembleBody().AddWeapons().AddTurret().AddDecoration().GetBuildable();
         }
+
+        public override Tank createShotgunTank(string id, int x, int y)
+        {
+            Tank blueShotgunTank = new BlueShotgunTank(id, x, y, "BlueShotgunTank");
+            Builder builder = new ShotgunTankBuilder();
+
+            return builder.StartNew(blueShotgunTank).AssembleBody().AddWeapons().AddTurret().AddDecoration().GetBuildable();
+        }
     }
 }

@@ -48,12 +48,11 @@ namespace windowsForms_client
             gameTimer.Elapsed += OnGameTimerElapsed;
             DisplayTime();
 
-            InitializeObstacles(); // Call to initialize obstacles
-
             KeyDown += OnKeyDown;
             KeyUp += OnKeyUp;
             webSocketComunication = new WebSocketComunication(tankType, selectedUpgrade, this);
-            this.FormClosing += GameClient_FormClosing; 
+            this.FormClosing += GameClient_FormClosing;
+            InitializeObstacles(); // Call to initialize obstacles
         }
 
         // Initialize obstacles AND coind
@@ -132,6 +131,10 @@ namespace windowsForms_client
                 {
                     CurrentTank = RF.createTommyGunTank(playerId, 600, 200);
                 }
+                if (tankType == "Shotgun")
+                {
+                    CurrentTank = RF.createShotgunTank(playerId, 600, 200);
+                }
 
             } 
             else if (tankColor == "Blue")
@@ -144,6 +147,10 @@ namespace windowsForms_client
                 if (tankType == "TommyGun")
                 {
                     CurrentTank = BF.createTommyGunTank(playerId, 100, 200);
+                }
+                if (tankType == "Shotgun")
+                {
+                    CurrentTank = BF.createShotgunTank(playerId, 100, 200);
                 }
             }
             
@@ -204,6 +211,18 @@ namespace windowsForms_client
             if (IsCollidingWithCoin(CurrentTank, coin))
             {
                 Coin clonedCoin = (Coin)coin.DeepCopy();
+
+                //GetHashCode(clonedCoin);
+                Console.WriteLine("DeepCopy: ");
+                Console.WriteLine(coin.GetHashCode());
+                Console.WriteLine(clonedCoin.GetHashCode());
+
+                Coin clonedCoin2 = (Coin)coin.ShallowCopy();
+                Console.WriteLine("ShallowCopy: ");
+                Console.WriteLine(coin.GetHashCode());
+                Console.WriteLine(clonedCoin2.GetHashCode());
+
+
                 //Coin clonedCoin = (Coin)coin.ShallowCopy();
                 clonedCoin.Position.X = new Random().Next(0, 800);
                 clonedCoin.Position.Y = new Random().Next(0, 300);
