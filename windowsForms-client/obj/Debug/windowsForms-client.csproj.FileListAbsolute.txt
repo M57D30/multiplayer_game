@@ -16,3 +16,13 @@ C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debu
 C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.csproj.CoreCompileInputs.cache
 C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.exe
 C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.pdb
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms-client.csproj.AssemblyReference.cache
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms-client.csproj.SuggestedBindingRedirects.cache
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms-client.exe.config
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms_client.TankProperties.resources
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms_client.GameClient.resources
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms_client.Properties.Resources.resources
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms-client.csproj.GenerateResource.cache
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms-client.csproj.CoreCompileInputs.cache
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms-client.exe
+C:\4_kursas_projektai\OPP\projektas\windowsForms-client\obj\Debug\windowsForms-client.pdb

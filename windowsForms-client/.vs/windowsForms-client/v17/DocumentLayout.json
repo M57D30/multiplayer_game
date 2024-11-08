@@ -1,26 +1,50 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\",
+  "WorkspaceRootPath": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\vyten\\desktop\\git uploads\\multiplayer_game\\windowsforms-client\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\gameclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:gameclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\tank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:tank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\adapter\\keyboardcontroladapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:adapter\\keyboardcontroladapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\adapter\\icontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:adapter\\icontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\strategy\\blindnessstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:strategy\\blindnessstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\strategy\\istrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:strategy\\istrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\strategy\\stuckstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:strategy\\stuckstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\strategy\\faststrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:strategy\\faststrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\factory\\snowcreator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:factory\\snowcreator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\websocketcomunication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:websocketcomunication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\4_kursas_projektai\\opp\\projektas\\windowsforms-client\\tank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:tank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +54,150 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainForm.cs",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.cs",
-              "RelativeDocumentMoniker": "MainForm.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.cs",
-              "RelativeToolTip": "MainForm.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAAAIEAAAAyAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "KeyboardControlAdapter.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Adapter\\KeyboardControlAdapter.cs",
+              "RelativeDocumentMoniker": "Adapter\\KeyboardControlAdapter.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Adapter\\KeyboardControlAdapter.cs",
+              "RelativeToolTip": "Adapter\\KeyboardControlAdapter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-18T15:27:00.57Z",
+              "WhenOpened": "2024-11-08T04:13:21.181Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IControl.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Adapter\\IControl.cs",
+              "RelativeDocumentMoniker": "Adapter\\IControl.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Adapter\\IControl.cs",
+              "RelativeToolTip": "Adapter\\IControl.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T04:12:58.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "StuckStrategy.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Strategy\\StuckStrategy.cs",
+              "RelativeDocumentMoniker": "Strategy\\StuckStrategy.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Strategy\\StuckStrategy.cs",
+              "RelativeToolTip": "Strategy\\StuckStrategy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T04:06:11.798Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FastStrategy.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Strategy\\FastStrategy.cs",
+              "RelativeDocumentMoniker": "Strategy\\FastStrategy.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Strategy\\FastStrategy.cs",
+              "RelativeToolTip": "Strategy\\FastStrategy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T04:05:55.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BlindnessStrategy.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Strategy\\BlindnessStrategy.cs",
+              "RelativeDocumentMoniker": "Strategy\\BlindnessStrategy.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Strategy\\BlindnessStrategy.cs",
+              "RelativeToolTip": "Strategy\\BlindnessStrategy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T04:05:51.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IStrategy.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Strategy\\IStrategy.cs",
+              "RelativeDocumentMoniker": "Strategy\\IStrategy.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Strategy\\IStrategy.cs",
+              "RelativeToolTip": "Strategy\\IStrategy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T04:05:47.454Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SnowCreator.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Factory\\SnowCreator.cs",
+              "RelativeDocumentMoniker": "Factory\\SnowCreator.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Factory\\SnowCreator.cs",
+              "RelativeToolTip": "Factory\\SnowCreator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T03:58:45.103Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameClient.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\GameClient.cs",
+              "RelativeDocumentMoniker": "GameClient.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\GameClient.cs",
+              "RelativeToolTip": "GameClient.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABEAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T03:33:01.89Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Tank.cs",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\Tank.cs",
-              "RelativeDocumentMoniker": "Tank.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\Tank.cs",
-              "RelativeToolTip": "Tank.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T18:51:19.53Z"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MainForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.Designer.cs",
-              "RelativeDocumentMoniker": "MainForm.Designer.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.Designer.cs",
-              "RelativeToolTip": "MainForm.Designer.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAawB4AAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-18T15:26:48.908Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.cs",
-              "RelativeDocumentMoniker": "MainForm.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.cs [Design]",
-              "RelativeToolTip": "MainForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-18T15:26:47.132Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\Program.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\Program.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABTAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-18T15:19:04.418Z"
+              "WhenOpened": "2024-11-08T03:32:37.42Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "WebSocketComunication.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\WebSocketComunication.cs",
+              "RelativeDocumentMoniker": "WebSocketComunication.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\WebSocketComunication.cs",
+              "RelativeToolTip": "WebSocketComunication.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAA5wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T03:32:28.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Tank.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Tank.cs",
+              "RelativeDocumentMoniker": "Tank.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\windowsForms-client\\Tank.cs",
+              "RelativeToolTip": "Tank.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T18:51:19.53Z",
+              "EditorCaption": ""
             }
           ]
         }

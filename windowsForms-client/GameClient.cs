@@ -17,12 +17,14 @@ using System.Runtime.CompilerServices;
 using windowsForms_client.Strategy;
 using windowsForms_client.Factory;
 using windowsForms_client.Prototype;
+using windowsForms_client.Adapter;
 
 namespace windowsForms_client
 
 {
     public partial class GameClient : Form
     {
+        private IControl _controlAdapter;
         private Tank CurrentTank;
         private List<Tank> allPlayers = new List<Tank>();
         private System.Timers.Timer gameLoopTimer;
@@ -41,6 +43,7 @@ namespace windowsForms_client
 
         public GameClient(string tankType, string selectedUpgrade)
         {
+            _controlAdapter = new KeyboardControlAdapter(CurrentTank);
             InitializeComponent();
             PrintTankType(tankType);
 
@@ -169,22 +172,22 @@ namespace windowsForms_client
             gameLoopTimer.Start();
         }
 
-        
+     
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (!CurrentTank.IsFrozen)
             {
-                if (e.KeyCode == Keys.Up) CurrentTank.MoveUp();
-                if (e.KeyCode == Keys.Down) CurrentTank.MoveDown();
-                if (e.KeyCode == Keys.Left) CurrentTank.MoveLeft();
-                if (e.KeyCode == Keys.Right) CurrentTank.MoveRight();
+                if (e.KeyCode == Keys.Up) _controlAdapter.MoveUp();
+                if (e.KeyCode == Keys.Down) _controlAdapter.MoveDown();
+                if (e.KeyCode == Keys.Left) _controlAdapter.MoveLeft();
+                if (e.KeyCode == Keys.Right) _controlAdapter.MoveRight();
             }
 
             // Shoot when spacebar is pressed
             if (e.KeyCode == Keys.Space && !spacebarPressed && !CurrentTank.IsBulletFrozen)
             {
                 spacebarPressed = true;
-                CurrentTank.StartShooting();
+                _controlAdapter.Shoot();
             }
         }
 

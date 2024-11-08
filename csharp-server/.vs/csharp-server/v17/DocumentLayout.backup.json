@@ -1,10 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\csharp-server\\",
+  "WorkspaceRootPath": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|c:\\users\\vyten\\desktop\\git uploads\\multiplayer_game\\csharp-server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|c:\\4_kursas_projektai\\opp\\projektas\\csharp-server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|c:\\4_kursas_projektai\\opp\\projektas\\csharp-server\\observer\\clientobserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|solutionrelative:observer\\clientobserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|c:\\4_kursas_projektai\\opp\\projektas\\csharp-server\\observer\\gamestartevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|solutionrelative:observer\\gamestartevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|c:\\4_kursas_projektai\\opp\\projektas\\csharp-server\\observer\\iobserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|solutionrelative:observer\\iobserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|c:\\4_kursas_projektai\\opp\\projektas\\csharp-server\\observer\\subject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|solutionrelative:observer\\subject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|c:\\4_kursas_projektai\\opp\\projektas\\csharp-server\\observer\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1638C5A1-55C1-42D6-87C8-F48C4314D5B9}|csharp-server.csproj|solutionrelative:observer\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,24 +34,85 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Subject.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\Subject.cs",
+              "RelativeDocumentMoniker": "Observer\\Subject.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\Subject.cs",
+              "RelativeToolTip": "Observer\\Subject.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T02:08:51.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Server.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\Server.cs",
+              "RelativeDocumentMoniker": "Observer\\Server.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\Server.cs",
+              "RelativeToolTip": "Observer\\Server.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T02:08:47.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IObserver.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\IObserver.cs",
+              "RelativeDocumentMoniker": "Observer\\IObserver.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\IObserver.cs",
+              "RelativeToolTip": "Observer\\IObserver.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T02:08:45.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GameStartEvent.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\GameStartEvent.cs",
+              "RelativeDocumentMoniker": "Observer\\GameStartEvent.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\GameStartEvent.cs",
+              "RelativeToolTip": "Observer\\GameStartEvent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T02:08:43.06Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ClientObserver.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\ClientObserver.cs",
+              "RelativeDocumentMoniker": "Observer\\ClientObserver.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Observer\\ClientObserver.cs",
+              "RelativeToolTip": "Observer\\ClientObserver.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T02:08:32.608Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\csharp-server\\Program.cs",
+              "DocumentMoniker": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\csharp-server\\Program.cs",
+              "ToolTip": "C:\\4_kursas_projektai\\OPP\\projektas\\csharp-server\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAAEkAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAIwGcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-18T11:03:39.622Z",
+              "WhenOpened": "2024-11-08T02:03:52.156Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
             }
           ]
         }

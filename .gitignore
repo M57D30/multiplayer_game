@@ -3,3 +3,10 @@
 ################################################################################
 
 .vs/
+./csharp-server/bin/
+./csharp-server/obj/
+./csharp-server/.vs/
+
+./windowsForms-client/bin/
+./windowsForms-client/obj/
+./windowsForms-client/.vs/
