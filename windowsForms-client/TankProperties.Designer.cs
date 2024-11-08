@@ -73,6 +73,7 @@ namespace windowsForms_client
             this.Upgrade.Name = "Upgrade";
             this.Upgrade.Size = new System.Drawing.Size(146, 21);
             this.Upgrade.TabIndex = 3;
+            this.Upgrade.SelectedIndexChanged += new System.EventHandler(this.Upgrade_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -94,6 +95,7 @@ namespace windowsForms_client
             this.Controls.Add(this.TankType);
             this.Name = "TankProperties";
             this.Text = "TankProperties";
+            this.Load += new System.EventHandler(this.TankProperties_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

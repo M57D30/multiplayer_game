@@ -71,6 +71,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Observer\ClientObserver.cs" />
+    <Compile Include="Observer\GameStartEvent.cs" />
+    <Compile Include="Observer\IObserver.cs" />
+    <Compile Include="Observer\Server.cs" />
+    <Compile Include="Observer\Subject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

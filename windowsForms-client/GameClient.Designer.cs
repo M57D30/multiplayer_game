@@ -59,6 +59,7 @@ namespace windowsForms_client
             this.Controls.Add(this.TimeLabel);
             this.Name = "GameClient";
             this.Text = "MainForm";
+            this.Load += new System.EventHandler(this.GameClient_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

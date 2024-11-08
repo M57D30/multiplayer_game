@@ -1,26 +1,130 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\",
+  "WorkspaceRootPath": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\vyten\\desktop\\git uploads\\multiplayer_game\\windowsforms-client\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\decorators\\speedboostdecorator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:decorators\\speedboostdecorator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\tank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\gameclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:gameclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\tank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:tank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\decorators\\healthdecorator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:decorators\\healthdecorator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\decorators\\itankcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:decorators\\itankcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\builderpattern\\pistoltankbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:builderpattern\\pistoltankbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\builderpattern\\tommyguntankbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:builderpattern\\tommyguntankbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\builderpattern\\builder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:builderpattern\\builder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\decorators\\tankdecorator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:decorators\\tankdecorator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\gameclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:gameclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\commands\\movedowncommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:commands\\movedowncommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\commands\\icommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:commands\\icommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\tankproperties.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:tankproperties.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\commands\\moveupcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:commands\\moveupcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\websocketcomunication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:websocketcomunication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\tankproperties.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:tankproperties.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\tankproperties.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:tankproperties.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\commands\\moverightcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:commands\\moverightcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\commands\\shootcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:commands\\shootcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\commands\\moveleftcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:commands\\moveleftcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\prototype\\coin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:prototype\\coin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\prototype\\postion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:prototype\\postion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\abstractfactorypatternn\\factorys\\bluefactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:abstractfactorypatternn\\factorys\\bluefactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\abstractfactorypatternn\\tanks\\pistoltank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:abstractfactorypatternn\\tanks\\pistoltank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\abstractfactorypatternn\\tanks\\bluetommyguntank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:abstractfactorypatternn\\tanks\\bluetommyguntank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\abstractfactorypatternn\\tanks\\bluepistoltank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:abstractfactorypatternn\\tanks\\bluepistoltank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\factory\\icecreator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:factory\\icecreator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\factory\\ice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:factory\\ice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|c:\\users\\erikas\\documents\\github\\multiplayer_game\\windowsforms-client\\factory\\obstaclecreator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FD10ECB-A4B9-4934-8642-070BD739EDE6}|windowsForms-client.csproj|solutionrelative:factory\\obstaclecreator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,32 +134,39 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainForm.cs",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.cs",
-              "RelativeDocumentMoniker": "MainForm.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.cs",
-              "RelativeToolTip": "MainForm.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAAAIEAAAAyAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "Tank.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Tank.cs",
+              "RelativeDocumentMoniker": "Tank.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Tank.cs",
+              "RelativeToolTip": "Tank.cs",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAkwIcAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-18T15:27:00.57Z",
+              "WhenOpened": "2024-10-03T18:51:19.53Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Tank.cs",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\Tank.cs",
-              "RelativeDocumentMoniker": "Tank.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\Tank.cs",
-              "RelativeToolTip": "Tank.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAiAAAAAAAAAA==",
+              "Title": "GameClient.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\GameClient.cs",
+              "RelativeDocumentMoniker": "GameClient.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\GameClient.cs",
+              "RelativeToolTip": "GameClient.cs",
+              "ViewState": "AgIAAIkAAAAAAAAAAAAYwK0AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T18:51:19.53Z"
+              "WhenOpened": "2024-11-07T21:42:46.247Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Bookmark",
@@ -63,38 +174,378 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MainForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.Designer.cs",
-              "RelativeDocumentMoniker": "MainForm.Designer.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.Designer.cs",
-              "RelativeToolTip": "MainForm.Designer.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAawB4AAAAeAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "TommyGunTankBuilder.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\BuilderPattern\\TommyGunTankBuilder.cs",
+              "RelativeDocumentMoniker": "BuilderPattern\\TommyGunTankBuilder.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\BuilderPattern\\TommyGunTankBuilder.cs",
+              "RelativeToolTip": "BuilderPattern\\TommyGunTankBuilder.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-18T15:26:48.908Z"
+              "WhenOpened": "2024-11-08T00:15:54.439Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SpeedBoostDecorator.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Decorators\\SpeedBoostDecorator.cs",
+              "RelativeDocumentMoniker": "Decorators\\SpeedBoostDecorator.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Decorators\\SpeedBoostDecorator.cs",
+              "RelativeToolTip": "Decorators\\SpeedBoostDecorator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T00:03:37.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HealthDecorator.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Decorators\\HealthDecorator.cs",
+              "RelativeDocumentMoniker": "Decorators\\HealthDecorator.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Decorators\\HealthDecorator.cs",
+              "RelativeToolTip": "Decorators\\HealthDecorator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T00:02:30.632Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TankDecorator.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Decorators\\TankDecorator.cs",
+              "RelativeDocumentMoniker": "Decorators\\TankDecorator.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Decorators\\TankDecorator.cs",
+              "RelativeToolTip": "Decorators\\TankDecorator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T00:01:18.877Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "MainForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.cs",
-              "RelativeDocumentMoniker": "MainForm.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\MainForm.cs [Design]",
-              "RelativeToolTip": "MainForm.cs [Design]",
+              "Title": "ITankComponent.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Decorators\\ITankComponent.cs",
+              "RelativeDocumentMoniker": "Decorators\\ITankComponent.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Decorators\\ITankComponent.cs",
+              "RelativeToolTip": "Decorators\\ITankComponent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-18T15:26:47.132Z"
+              "WhenOpened": "2024-11-07T23:58:06.737Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\vyten\\Desktop\\git uploads\\multiplayer_game\\windowsForms-client\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABTAAAAAAAAAA==",
+              "DocumentIndex": 17,
+              "Title": "TankProperties.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\TankProperties.Designer.cs",
+              "RelativeDocumentMoniker": "TankProperties.Designer.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\TankProperties.Designer.cs",
+              "RelativeToolTip": "TankProperties.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-18T15:19:04.418Z"
+              "WhenOpened": "2024-11-07T22:56:20.282Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ICommand.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\ICommand.cs",
+              "RelativeDocumentMoniker": "Commands\\ICommand.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\ICommand.cs",
+              "RelativeToolTip": "Commands\\ICommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T22:33:23.425Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ShootCommand.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\ShootCommand.cs",
+              "RelativeDocumentMoniker": "Commands\\ShootCommand.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\ShootCommand.cs",
+              "RelativeToolTip": "Commands\\ShootCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T22:40:16.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "MoveRightCommand.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\MoveRightCommand.cs",
+              "RelativeDocumentMoniker": "Commands\\MoveRightCommand.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\MoveRightCommand.cs",
+              "RelativeToolTip": "Commands\\MoveRightCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T22:39:11.187Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "MoveLeftCommand.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\MoveLeftCommand.cs",
+              "RelativeDocumentMoniker": "Commands\\MoveLeftCommand.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\MoveLeftCommand.cs",
+              "RelativeToolTip": "Commands\\MoveLeftCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T22:38:48.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MoveDownCommand.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\MoveDownCommand.cs",
+              "RelativeDocumentMoniker": "Commands\\MoveDownCommand.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\MoveDownCommand.cs",
+              "RelativeToolTip": "Commands\\MoveDownCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T22:38:17.81Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MoveUpCommand.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\MoveUpCommand.cs",
+              "RelativeDocumentMoniker": "Commands\\MoveUpCommand.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Commands\\MoveUpCommand.cs",
+              "RelativeToolTip": "Commands\\MoveUpCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T22:34:35.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "GameClient.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\GameClient.cs",
+              "RelativeDocumentMoniker": "GameClient.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\GameClient.cs [Design]",
+              "RelativeToolTip": "GameClient.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T22:01:38.33Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Coin.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Prototype\\Coin.cs",
+              "RelativeDocumentMoniker": "Prototype\\Coin.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Prototype\\Coin.cs",
+              "RelativeToolTip": "Prototype\\Coin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T22:01:14.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-18T15:19:04.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "WebSocketComunication.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\WebSocketComunication.cs",
+              "RelativeDocumentMoniker": "WebSocketComunication.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\WebSocketComunication.cs",
+              "RelativeToolTip": "WebSocketComunication.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAWwB0AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T20:23:17.32Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "BlueFactory.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\AbstractFactoryPatternn\\Factorys\\BlueFactory.cs",
+              "RelativeDocumentMoniker": "AbstractFactoryPatternn\\Factorys\\BlueFactory.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\AbstractFactoryPatternn\\Factorys\\BlueFactory.cs",
+              "RelativeToolTip": "AbstractFactoryPatternn\\Factorys\\BlueFactory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:30:14.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "PistolTank.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\AbstractFactoryPatternn\\Tanks\\PistolTank.cs",
+              "RelativeDocumentMoniker": "AbstractFactoryPatternn\\Tanks\\PistolTank.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\AbstractFactoryPatternn\\Tanks\\PistolTank.cs",
+              "RelativeToolTip": "AbstractFactoryPatternn\\Tanks\\PistolTank.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:29:52.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "BlueTommyGunTank.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\AbstractFactoryPatternn\\Tanks\\BlueTommyGunTank.cs",
+              "RelativeDocumentMoniker": "AbstractFactoryPatternn\\Tanks\\BlueTommyGunTank.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\AbstractFactoryPatternn\\Tanks\\BlueTommyGunTank.cs",
+              "RelativeToolTip": "AbstractFactoryPatternn\\Tanks\\BlueTommyGunTank.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:29:51.13Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "BluePistolTank.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\AbstractFactoryPatternn\\Tanks\\BluePistolTank.cs",
+              "RelativeDocumentMoniker": "AbstractFactoryPatternn\\Tanks\\BluePistolTank.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\AbstractFactoryPatternn\\Tanks\\BluePistolTank.cs",
+              "RelativeToolTip": "AbstractFactoryPatternn\\Tanks\\BluePistolTank.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:29:45.092Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "IceCreator.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Factory\\IceCreator.cs",
+              "RelativeDocumentMoniker": "Factory\\IceCreator.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Factory\\IceCreator.cs",
+              "RelativeToolTip": "Factory\\IceCreator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:29:38.737Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Ice.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Factory\\Ice.cs",
+              "RelativeDocumentMoniker": "Factory\\Ice.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Factory\\Ice.cs",
+              "RelativeToolTip": "Factory\\Ice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:29:37.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Builder.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\BuilderPattern\\Builder.cs",
+              "RelativeDocumentMoniker": "BuilderPattern\\Builder.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\BuilderPattern\\Builder.cs",
+              "RelativeToolTip": "BuilderPattern\\Builder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:29:15.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PistolTankBuilder.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\BuilderPattern\\PistolTankBuilder.cs",
+              "RelativeDocumentMoniker": "BuilderPattern\\PistolTankBuilder.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\BuilderPattern\\PistolTankBuilder.cs",
+              "RelativeToolTip": "BuilderPattern\\PistolTankBuilder.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAswC8AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:29:06.363Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "TankProperties.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\TankProperties.cs",
+              "RelativeDocumentMoniker": "TankProperties.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\TankProperties.cs",
+              "RelativeToolTip": "TankProperties.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAnwCcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:28:01.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "TankProperties.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\TankProperties.cs",
+              "RelativeDocumentMoniker": "TankProperties.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\TankProperties.cs [Design]",
+              "RelativeToolTip": "TankProperties.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T21:27:36.492Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Postion.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Prototype\\Postion.cs",
+              "RelativeDocumentMoniker": "Prototype\\Postion.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Prototype\\Postion.cs",
+              "RelativeToolTip": "Prototype\\Postion.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T20:25:43.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Bullet.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Bullet.cs",
+              "RelativeDocumentMoniker": "Bullet.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Bullet.cs",
+              "RelativeToolTip": "Bullet.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T20:25:34.549Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "ObstacleCreator.cs",
+              "DocumentMoniker": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Factory\\ObstacleCreator.cs",
+              "RelativeDocumentMoniker": "Factory\\ObstacleCreator.cs",
+              "ToolTip": "C:\\Users\\Erikas\\Documents\\GitHub\\multiplayer_game\\windowsForms-client\\Factory\\ObstacleCreator.cs",
+              "RelativeToolTip": "Factory\\ObstacleCreator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T20:26:13.031Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -9,11 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using windowsForms_client.Decorators;
 using windowsForms_client.Prototype;
 
 namespace windowsForms_client
 {
-    public abstract class Tank
+    public abstract class Tank : ITankComponent
     {
         //Base values
         public string playerId { get; set; }
@@ -70,6 +71,21 @@ namespace windowsForms_client
 
         }
 
+        public int GetHealth()
+        {
+            return health;
+        }
+
+        public int GetSpeed()
+        {
+            return MovementSpeedX;
+        }
+
+        public void ExecuteCommand(ICommand command)
+        {
+            command.Execute();
+        }
+
         public void StartFreeze()
         {
             if (!IsFrozen)
@@ -117,7 +133,7 @@ namespace windowsForms_client
 
         public void UpdateHealth(int value)
         {
-
+            health = value;
         }
 
         public void UpdateShield(int value)

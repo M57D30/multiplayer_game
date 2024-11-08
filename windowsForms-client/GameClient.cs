@@ -17,6 +17,8 @@ using System.Runtime.CompilerServices;
 using windowsForms_client.Strategy;
 using windowsForms_client.Factory;
 using windowsForms_client.Prototype;
+using windowsForms_client.Commands;
+using windowsForms_client.Decorators;
 
 namespace windowsForms_client
 
@@ -37,6 +39,12 @@ namespace windowsForms_client
 
         private Coin coin;
 
+        ICommand moveUp;
+        ICommand moveDown;
+        ICommand moveLeft;
+        ICommand moveRight;
+        ICommand shoot;
+
 
 
         public GameClient(string tankType, string selectedUpgrade)
@@ -50,9 +58,16 @@ namespace windowsForms_client
 
             KeyDown += OnKeyDown;
             KeyUp += OnKeyUp;
+
             webSocketComunication = new WebSocketComunication(tankType, selectedUpgrade, this);
+<<<<<<< Updated upstream
             this.FormClosing += GameClient_FormClosing;
             InitializeObstacles(); // Call to initialize obstacles
+=======
+
+            this.FormClosing += GameClient_FormClosing;
+
+>>>>>>> Stashed changes
         }
 
         // Initialize obstacles AND coind
@@ -153,7 +168,18 @@ namespace windowsForms_client
                     CurrentTank = BF.createShotgunTank(playerId, 100, 200);
                 }
             }
-            
+
+            CurrentTank.UpdateHealth(100);
+
+            moveUp = new MoveUpCommand(CurrentTank);
+            moveDown = new MoveDownCommand(CurrentTank);
+            moveLeft = new MoveLeftCommand(CurrentTank);
+            moveRight = new MoveRightCommand(CurrentTank);
+            shoot = new ShootCommand(CurrentTank);
+
+            ITankComponent shieldedTank = new HealthDecorator(CurrentTank);
+            int health = shieldedTank.GetHealth();
+
             Console.WriteLine(CurrentTank.getNameOfTank());
             allPlayers.Add(CurrentTank);
             BeginGameLoop();
@@ -169,15 +195,17 @@ namespace windowsForms_client
             gameLoopTimer.Start();
         }
 
-        
+
+
+
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (!CurrentTank.IsFrozen)
             {
-                if (e.KeyCode == Keys.Up) CurrentTank.MoveUp();
-                if (e.KeyCode == Keys.Down) CurrentTank.MoveDown();
-                if (e.KeyCode == Keys.Left) CurrentTank.MoveLeft();
-                if (e.KeyCode == Keys.Right) CurrentTank.MoveRight();
+                if (e.KeyCode == Keys.Up) CurrentTank.ExecuteCommand(moveUp);
+                if (e.KeyCode == Keys.Down) CurrentTank.ExecuteCommand(moveDown);
+                if (e.KeyCode == Keys.Left) CurrentTank.ExecuteCommand(moveLeft);
+                if (e.KeyCode == Keys.Right) CurrentTank.ExecuteCommand(moveRight);
             }
 
             // Shoot when spacebar is pressed
@@ -187,6 +215,8 @@ namespace windowsForms_client
                 CurrentTank.StartShooting();
             }
         }
+
+    
 
 
         private void OnKeyUp(object sender, KeyEventArgs e)
@@ -413,5 +443,9 @@ namespace windowsForms_client
             }
         }
 
+        private void GameClient_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

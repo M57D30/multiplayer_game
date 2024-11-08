@@ -16,3 +16,35 @@ C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debu
 C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.csproj.CoreCompileInputs.cache
 C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.exe
 C:\Users\vyten\Desktop\git uploads\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.pdb
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.csproj.AssemblyReference.cache
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\obj\Debug\windowsForms_client.GameClient.resources
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\obj\Debug\windowsForms_client.Properties.Resources.resources
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\obj\Debug\windowsForms_client.TankProperties.resources
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.csproj.GenerateResource.cache
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.csproj.CoreCompileInputs.cache
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.exe
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\obj\Debug\windowsForms-client.pdb
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\windowsForms-client.exe.config
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\windowsForms-client.exe
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\windowsForms-client.pdb
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Buffers.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Memory.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Text.Json.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.ValueTuple.dll
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Buffers.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Memory.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Text.Json.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\bin\Debug\System.ValueTuple.xml
+C:\Users\Erikas\Documents\GitHub\multiplayer_game\windowsForms-client\obj\Debug\windowsF.D690C609.Up2Date
