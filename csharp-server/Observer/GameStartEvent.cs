@@ -9,7 +9,7 @@ namespace csharp_server.Observer
 {
     public class GameStartEvent
     {
-        private Timer updateTimer;
+        private System.Timers.Timer updateTimer;
         private Subject server;
 
         public GameStartEvent(Subject server)
@@ -22,7 +22,7 @@ namespace csharp_server.Observer
             var message = "Start gameTimer";
             server.NotifyAll(message);
 
-            updateTimer = new Timer(10000); // 10 seconds
+            updateTimer = new System.Timers.Timer(10000); // 10 seconds
             updateTimer.Elapsed += OnTimedEvent;
             updateTimer.AutoReset = true; // Reset the timer automatically after the interval
             updateTimer.Enabled = true; // Start the timer

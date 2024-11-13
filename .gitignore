@@ -3,3 +3,7 @@
 ################################################################################
 
 .vs/
+/csharp-server/bin/Debug/net8.0
+/csharp-server/obj
+/windowsForms-client/bin/Debug/net8.0-windows
+/windowsForms-client/obj
