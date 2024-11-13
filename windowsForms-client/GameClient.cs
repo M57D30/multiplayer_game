@@ -33,8 +33,16 @@ namespace windowsForms_client
         private System.Timers.Timer gameTimer;
         private int elapsedSeconds = 0;
 
+        private System.Timers.Timer temporaryEffectTimer;
         private List<Obstacle> obstacles = new List<Obstacle>();
-
+        private List<IStrategy> randomStrategies = new List<IStrategy>
+        {
+            new FastStrategy(),
+            new SlowStrategy(),
+            new StuckStrategy(),
+            new BlindnessStrategy()
+        };
+        private Dictionary<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)> originalObstacleStates = new Dictionary<Obstacle, (Color, IStrategy)>();
         private Coin coin;
 
 
@@ -53,6 +61,10 @@ namespace windowsForms_client
             webSocketComunication = new WebSocketComunication(tankType, selectedUpgrade, this);
             this.FormClosing += GameClient_FormClosing;
             InitializeObstacles(); // Call to initialize obstacles
+
+            temporaryEffectTimer = new System.Timers.Timer(10000);
+            temporaryEffectTimer.Elapsed += OnTemporaryEffectTimerElapsed;
+            temporaryEffectTimer.Start();
         }
 
         // Initialize obstacles AND coind
@@ -68,6 +80,11 @@ namespace windowsForms_client
             obstacles.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));    
             obstacles.Add(iceCreator.CreateObstacle(600, 350, new FastStrategy()));    
             obstacles.Add(snowCreator.CreateObstacle(350, 150, new StuckStrategy()));
+
+            foreach (var obstacle in obstacles)
+            {
+                originalObstacleStates[obstacle] = (GetObstacleColor(obstacle), obstacle.Strategy);
+            }
 
             coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300));
 
@@ -357,6 +374,70 @@ namespace windowsForms_client
             }
         }
 
+        private void OnTemporaryEffectTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            ApplyRandomStrategiesToObstacles();
+            Invalidate();
+            Task.Delay(5000).ContinueWith(_ =>
+            {
+                RevertObstacleStrategies();
+                Invalidate();
+                temporaryEffectTimer.Stop();
+                temporaryEffectTimer.Start();
+            });
+        }
+        private void RevertObstacleStrategies()
+        {
+            foreach (var obstacle in obstacles)
+            {
+                var originalState = originalObstacleStates[obstacle];
+                obstacle.Strategy = originalState.OriginalStrategy;
+                obstacle.SetTempColor(originalState.OriginalColor);
+            }
+        }
+        private void ApplyRandomStrategiesToObstacles()
+        {
+            Random random = new Random();
+            foreach (var obstacle in obstacles)
+            {
+                int randomIndex = random.Next(randomStrategies.Count);
+                obstacle.Strategy = randomStrategies[randomIndex];
+                obstacle.SetTempColor(Color.Magenta);
+            }
+        }
+        private Color GetObstacleColor(Obstacle obstacle)
+        {
+            if (obstacle is Mist)
+            {
+                obstacle.SetOriginalColor(Color.LightGray);
+                obstacle.SetTempColor(Color.LightGray);
+                return Color.LightGray;
+            }
+
+            if (obstacle is Mud)
+            {
+                obstacle.SetOriginalColor(Color.SaddleBrown);
+                obstacle.SetTempColor(Color.SaddleBrown);
+                return Color.SaddleBrown;
+            }
+
+            if (obstacle is Ice)
+            {
+                obstacle.SetOriginalColor(Color.LightSteelBlue);
+                obstacle.SetTempColor(Color.LightSteelBlue);
+                return Color.LightSteelBlue;
+            }
+
+            if (obstacle is Snow)
+            {
+                obstacle.SetOriginalColor(Color.LightBlue);
+                obstacle.SetTempColor(Color.LightBlue);
+                return Color.LightBlue;
+            }
+            obstacle.SetOriginalColor(Color.Black);
+            obstacle.SetTempColor(Color.Black);
+            return Color.Black;
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -365,22 +446,7 @@ namespace windowsForms_client
             // Adding obstacles to the game
             foreach (var obstacle in obstacles)
             {
-                if (obstacle is Mist)
-                {
-                    e.Graphics.FillRectangle(Brushes.LightGray, obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
-                }
-                else if (obstacle is Mud)
-                {
-                    e.Graphics.FillRectangle(Brushes.SaddleBrown, obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
-                }
-                else if (obstacle is Ice)
-                {
-                    e.Graphics.FillRectangle(Brushes.LightSteelBlue, obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
-                }
-                else if (obstacle is Snow)
-                {
-                    e.Graphics.FillRectangle(Brushes.LightBlue, obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
-                }
+                e.Graphics.FillRectangle(new SolidBrush(obstacle.GetTempColor()), obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
             }
 
             //Adding magic coin that does nothing
