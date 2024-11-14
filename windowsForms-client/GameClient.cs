@@ -31,6 +31,7 @@ namespace windowsForms_client
         private WebSocketComunication webSocketComunication;
 
         private System.Timers.Timer gameTimer;
+        private System.Timers.Timer coinTimer;
         private int elapsedSeconds = 0;
 
         private System.Timers.Timer temporaryEffectTimer;
@@ -44,6 +45,7 @@ namespace windowsForms_client
         };
         private Dictionary<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)> originalObstacleStates = new Dictionary<Obstacle, (Color, IStrategy)>();
         private Coin coin;
+        private int gamePhase = 1;
 
 
 
@@ -65,6 +67,11 @@ namespace windowsForms_client
             temporaryEffectTimer = new System.Timers.Timer(10000);
             temporaryEffectTimer.Elapsed += OnTemporaryEffectTimerElapsed;
             temporaryEffectTimer.Start();
+
+            coinTimer= new System.Timers.Timer(2000); 
+            coinTimer.Elapsed += OnCoinTimerElapsed;
+            coinTimer.Start();
+
         }
 
         // Initialize obstacles AND coind
@@ -81,12 +88,18 @@ namespace windowsForms_client
             obstacles.Add(iceCreator.CreateObstacle(600, 350, new FastStrategy()));    
             obstacles.Add(snowCreator.CreateObstacle(350, 150, new StuckStrategy()));
 
+
             foreach (var obstacle in obstacles)
             {
                 originalObstacleStates[obstacle] = (GetObstacleColor(obstacle), obstacle.Strategy);
             }
+            //PLEASE CHECK IF THIS CAUSES ERRORS TO U
 
-            coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300));
+            string imagePath = @"c:\pic\gold.jpg";
+            Console.WriteLine(imagePath);
+
+            //COMMENT THIS
+            coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300), new CoinDetails(1, imagePath, Image.FromFile(imagePath)));
 
             Invalidate();
         }
@@ -108,6 +121,20 @@ namespace windowsForms_client
             elapsedSeconds++;
             DisplayTime();
 
+        }
+        private void OnCoinTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            if (gamePhase >= 3)
+            {
+                (sender as System.Timers.Timer).Stop();
+                return;
+            }
+            Coin clonedCoin = coin.DeepCopy();
+            coin = clonedCoin;
+            gamePhase++;
+            Console.WriteLine(coin.Details.ImagePath);
+
+            Invalidate();
         }
 
         public void DisplayTime()
@@ -227,23 +254,7 @@ namespace windowsForms_client
 
             if (IsCollidingWithCoin(CurrentTank, coin))
             {
-                Coin clonedCoin = (Coin)coin.DeepCopy();
-
-                //GetHashCode(clonedCoin);
-                Console.WriteLine("DeepCopy: ");
-                Console.WriteLine(coin.GetHashCode());
-                Console.WriteLine(clonedCoin.GetHashCode());
-
-                Coin clonedCoin2 = (Coin)coin.ShallowCopy();
-                Console.WriteLine("ShallowCopy: ");
-                Console.WriteLine(coin.GetHashCode());
-                Console.WriteLine(clonedCoin2.GetHashCode());
-
-
-                //Coin clonedCoin = (Coin)coin.ShallowCopy();
-                clonedCoin.Position.X = new Random().Next(0, 800);
-                clonedCoin.Position.Y = new Random().Next(0, 300);
-
+                Coin clonedCoin = coin.ShallowCopy();
                 coin = clonedCoin;
             }
         }
@@ -288,7 +299,7 @@ namespace windowsForms_client
         private bool IsCollidingWithCoin(Tank tank, Coin coin)
         {
             Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
-            Rectangle coinRect = new Rectangle(coin.Position.X, coin.Position.Y, 10, 10);
+            Rectangle coinRect = new Rectangle(coin.X, coin.Y, 10, 10);
             return tankRect.IntersectsWith(coinRect);
         }
 
@@ -449,8 +460,8 @@ namespace windowsForms_client
                 e.Graphics.FillRectangle(new SolidBrush(obstacle.GetTempColor()), obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
             }
 
-            //Adding magic coin that does nothing
-            e.Graphics.FillRectangle(Brushes.Gold, coin.Position.X, coin.Position.Y, 10, 10);
+            //COMMENT THIS
+            e.Graphics.DrawImage(coin.Details.image, coin.X, coin.Y, 10, 10);
 
             foreach (var player in allPlayers.ToList())
             {
