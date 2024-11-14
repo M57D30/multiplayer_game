@@ -68,7 +68,7 @@ namespace windowsForms_client
             temporaryEffectTimer.Elapsed += OnTemporaryEffectTimerElapsed;
             temporaryEffectTimer.Start();
 
-            coinTimer= new System.Timers.Timer(2000); 
+            coinTimer= new System.Timers.Timer(5000); 
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
 
@@ -95,7 +95,12 @@ namespace windowsForms_client
             }
             //PLEASE CHECK IF THIS CAUSES ERRORS TO U
 
-            string imagePath = @"c:\pic\gold.jpg";
+            string imagePath = @"Images\gold.jpg";
+
+            if (!File.Exists(imagePath))
+            {
+                Console.WriteLine("Image not found: " + imagePath);
+            }
             Console.WriteLine(imagePath);
 
             //COMMENT THIS

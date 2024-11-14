@@ -50,6 +50,7 @@ namespace windowsForms_client.BuilderPattern
 
         public override Builder AssembleBody()
         {
+            this.isBodyAssembled = true;
             AddHeavyArmor();
             AddSlowWheels();
             return this;
@@ -57,6 +58,7 @@ namespace windowsForms_client.BuilderPattern
 
         public override Builder AddTurret()
         {
+            this.isTurretAdded = true;
             AddTwoDirectionTurret();
             return this;
         }

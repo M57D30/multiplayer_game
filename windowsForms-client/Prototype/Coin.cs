@@ -8,7 +8,8 @@ namespace windowsForms_client.Prototype
 {
     public class Coin : IPrototype<Coin>
     {
-        private const string pathB = @"c:\pic\";
+        //private const string pathB = @"c:\pic\";
+        private const string pathB = @"Images\";
         public string Type { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
