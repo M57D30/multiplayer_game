@@ -29,7 +29,7 @@ namespace windowsForms_client
         private int MovementSpeedY { get; set; }
         protected string TankBodyLookingDirection { get; set; }
 
-        //For shooting
+        //For shooting 
         public List<Bullet> bullets { get; set; }
         protected Bullet bullet { get; set; }
         protected int ShootingInterval { get; set; }

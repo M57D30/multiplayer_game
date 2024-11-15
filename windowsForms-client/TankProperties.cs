@@ -24,8 +24,11 @@ namespace windowsForms_client
         {
             string tankType = TankType.SelectedItem.ToString();
             string selectedUpgrade = Upgrade.SelectedItem.ToString();
+            string selectedControl = ControlType.SelectedItem.ToString();
+
+
             MessageBox.Show($"Tank selected: {tankType}\nTank upgrade selected: {selectedUpgrade}", "Game Setup");
-            GameClient gameClient = new GameClient(tankType, selectedUpgrade);
+            GameClientFacade gameClient = new GameClientFacade(tankType, selectedUpgrade, selectedControl);
             gameClient.Show();
             this.Hide();
         }
