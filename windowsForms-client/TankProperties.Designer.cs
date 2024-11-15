@@ -69,6 +69,7 @@ namespace windowsForms_client
             Upgrade.Name = "Upgrade";
             Upgrade.Size = new Size(170, 23);
             Upgrade.TabIndex = 3;
+            Upgrade.SelectedIndexChanged += Upgrade_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -92,6 +93,7 @@ namespace windowsForms_client
             Margin = new Padding(4, 3, 4, 3);
             Name = "TankProperties";
             Text = "TankProperties";
+            Load += TankProperties_Load;
             ResumeLayout(false);
             PerformLayout();
         }

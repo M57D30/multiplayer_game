@@ -17,6 +17,8 @@ using System.Runtime.CompilerServices;
 using windowsForms_client.Strategy;
 using windowsForms_client.Factory;
 using windowsForms_client.Prototype;
+using windowsForms_client.Commands;
+using windowsForms_client.Decorators;
 
 namespace windowsForms_client
 
@@ -47,12 +49,18 @@ namespace windowsForms_client
         private Coin coin;
         private int gamePhase = 1;
 
-
+        private Dictionary<Keys, ICommand> commands;
+        private Stack<ICommand> commandHistory;
 
         public GameClient(string tankType, string selectedUpgrade)
         {
             InitializeComponent();
             PrintTankType(tankType);
+
+            
+
+
+
 
             gameTimer = new System.Timers.Timer(1000);
             gameTimer.Elapsed += OnGameTimerElapsed;
@@ -68,7 +76,7 @@ namespace windowsForms_client
             temporaryEffectTimer.Elapsed += OnTemporaryEffectTimerElapsed;
             temporaryEffectTimer.Start();
 
-            coinTimer= new System.Timers.Timer(2000); 
+            coinTimer = new System.Timers.Timer(2000);
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
 
@@ -84,8 +92,8 @@ namespace windowsForms_client
 
             obstacles.Add(mistCreator.CreateObstacle(100, 100, new BlindnessStrategy()));
             obstacles.Add(mistCreator.CreateObstacle(600, 100, new BlindnessStrategy()));
-            obstacles.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));    
-            obstacles.Add(iceCreator.CreateObstacle(600, 350, new FastStrategy()));    
+            obstacles.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));
+            obstacles.Add(iceCreator.CreateObstacle(600, 350, new FastStrategy()));
             obstacles.Add(snowCreator.CreateObstacle(350, 150, new StuckStrategy()));
 
 
@@ -169,7 +177,7 @@ namespace windowsForms_client
                 if (tankType == "Pistol")
                 {
                     CurrentTank = RF.createPistolTank(playerId, 600, 200);
-                    
+
                 }
                 if (tankType == "TommyGun")
                 {
@@ -180,7 +188,7 @@ namespace windowsForms_client
                     CurrentTank = RF.createShotgunTank(playerId, 600, 200);
                 }
 
-            } 
+            }
             else if (tankColor == "Blue")
             {
                 AbstractFactory BF = new BlueFactory();
@@ -197,7 +205,19 @@ namespace windowsForms_client
                     CurrentTank = BF.createShotgunTank(playerId, 100, 200);
                 }
             }
-            
+
+            commands = new Dictionary<Keys, ICommand>
+            {
+                { Keys.Up, new MoveUpCommand(CurrentTank) },
+                { Keys.Down, new MoveDownCommand(CurrentTank) },
+                { Keys.Left, new MoveLeftCommand(CurrentTank) },
+                { Keys.Right, new MoveRightCommand(CurrentTank) },
+                { Keys.Space, new ShootCommand(CurrentTank) }
+            // Add more commands as needed
+            };
+
+            commandHistory = new Stack<ICommand>();
+
             Console.WriteLine(CurrentTank.getNameOfTank());
             allPlayers.Add(CurrentTank);
             BeginGameLoop();
@@ -213,22 +233,35 @@ namespace windowsForms_client
             gameLoopTimer.Start();
         }
 
-        
+
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (!CurrentTank.IsFrozen)
             {
-                if (e.KeyCode == Keys.Up) CurrentTank.MoveUp();
-                if (e.KeyCode == Keys.Down) CurrentTank.MoveDown();
-                if (e.KeyCode == Keys.Left) CurrentTank.MoveLeft();
-                if (e.KeyCode == Keys.Right) CurrentTank.MoveRight();
+                if (commands.TryGetValue(e.KeyCode, out ICommand command))
+                {
+                    command.Execute();
+                    commandHistory.Push(command);
+                }
+            }
+
+            if (e.KeyCode == Keys.Z && commandHistory.Count > 0)
+            {
+                ICommand lastCommand = commandHistory.Pop();
+                lastCommand.Undo();
             }
 
             // Shoot when spacebar is pressed
             if (e.KeyCode == Keys.Space && !spacebarPressed && !CurrentTank.IsBulletFrozen)
             {
                 spacebarPressed = true;
-                CurrentTank.StartShooting();
+
+                if (commands.TryGetValue(e.KeyCode, out ICommand command))
+                {
+                    command.Execute();
+                    commandHistory.Push(command);
+                }
+                
             }
         }
 
@@ -240,11 +273,17 @@ namespace windowsForms_client
 
             if (e.KeyCode == Keys.Space)
             {
-                CurrentTank.StopShooting(); // Stop shooting when space is released
+                // Stop shooting when space is released
+                if (commands.TryGetValue(e.KeyCode, out ICommand command))
+                {
+                    command.Undo();
+                    commandHistory.Push(command);
+                }
+                
                 spacebarPressed = false;
             }
         }
-       
+
 
         private async void OnGameLoop(object sender, ElapsedEventArgs e)
         {
@@ -256,6 +295,18 @@ namespace windowsForms_client
             {
                 Coin clonedCoin = coin.ShallowCopy();
                 coin = clonedCoin;
+
+                ITankComponent tanki;
+
+                tanki = coin.Collect(CurrentTank);
+
+                Console.WriteLine($"base y tank speed: {CurrentTank.GetYSpeed()}");
+                Console.WriteLine($"base x tank speed: {CurrentTank.GetYSpeed()}");
+                Console.WriteLine($"Upgraded y tank speed: {tanki.GetYSpeed()}");
+                Console.WriteLine($"Upgraded x tank speed: {tanki.GetXSpeed()}");
+                Console.WriteLine($"Base tank Healt: {CurrentTank.GetHealth()}");
+                Console.WriteLine($"Upgraded tank Healt: {tanki.GetHealth()}");
+
             }
         }
 
@@ -277,7 +328,7 @@ namespace windowsForms_client
                 {
                     if (obstacle.HasBeenAffected)
                     {
-                        obstacle.HasBeenAffected = false; 
+                        obstacle.HasBeenAffected = false;
                     }
                 }
             }
@@ -300,7 +351,9 @@ namespace windowsForms_client
         {
             Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
             Rectangle coinRect = new Rectangle(coin.X, coin.Y, 10, 10);
+
             return tankRect.IntersectsWith(coinRect);
+            
         }
 
 
@@ -321,7 +374,7 @@ namespace windowsForms_client
                 {
                     CurrentTank.bullets.RemoveAt(i);
                 }
-                
+
             }
             if (isBullet)
             {
@@ -345,7 +398,7 @@ namespace windowsForms_client
                 // Optionally, update bullets if necessary
                 existingPlayer.bullets.Clear(); // Clear existing bullets
                 existingPlayer.bullets.AddRange(receivedTank.bullets);
-                
+
             }
             else
             {
@@ -477,18 +530,22 @@ namespace windowsForms_client
 
         private void PrintTankType(string tankType)
         {
-           
+
             if (tankType == "Pistol")
             {
-               
+
                 Console.WriteLine("Pistol tank created.");
             }
             else if (tankType == "TommyGun")
             {
-               
+
                 Console.WriteLine("TommyGun tank created.");
             }
         }
 
+        private void GameClient_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

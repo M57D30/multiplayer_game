@@ -30,38 +30,41 @@ namespace windowsForms_client
         /// </summary>
         private void InitializeComponent()
         {
-            this.TimeLabel = new System.Windows.Forms.Label();
-            this.gameState = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            TimeLabel = new Label();
+            gameState = new Label();
+            SuspendLayout();
             // 
             // TimeLabel
             // 
-            this.TimeLabel.AutoSize = true;
-            this.TimeLabel.Location = new System.Drawing.Point(375, 9);
-            this.TimeLabel.Name = "TimeLabel";
-            this.TimeLabel.Size = new System.Drawing.Size(0, 13);
-            this.TimeLabel.TabIndex = 0;
+            TimeLabel.AutoSize = true;
+            TimeLabel.Location = new Point(438, 10);
+            TimeLabel.Margin = new Padding(4, 0, 4, 0);
+            TimeLabel.Name = "TimeLabel";
+            TimeLabel.Size = new Size(0, 15);
+            TimeLabel.TabIndex = 0;
             // 
             // gameState
             // 
-            this.gameState.AutoSize = true;
-            this.gameState.Location = new System.Drawing.Point(12, 9);
-            this.gameState.Name = "gameState";
-            this.gameState.Size = new System.Drawing.Size(0, 13);
-            this.gameState.TabIndex = 1;
+            gameState.AutoSize = true;
+            gameState.Location = new Point(14, 10);
+            gameState.Margin = new Padding(4, 0, 4, 0);
+            gameState.Name = "gameState";
+            gameState.Size = new Size(0, 15);
+            gameState.TabIndex = 1;
             // 
             // GameClient
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.gameState);
-            this.Controls.Add(this.TimeLabel);
-            this.Name = "GameClient";
-            this.Text = "MainForm";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(933, 519);
+            Controls.Add(gameState);
+            Controls.Add(TimeLabel);
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "GameClient";
+            Text = "MainForm";
+            Load += GameClient_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using windowsForms_client.Decorators;
 
 namespace windowsForms_client.Prototype
 {
@@ -41,6 +43,12 @@ namespace windowsForms_client.Prototype
             clone.Details = new CoinDetails(Details.Value + 1, imagePath, Image.FromFile(imagePath));
 
             return clone;
+        }
+
+        public ITankComponent Collect(ITankComponent tank)
+        {
+            Console.WriteLine($"Collecting {Type} coin. Applying upgrade...");
+            return tank.ApplyUpgrade(Type);
         }
 
         public override int GetHashCode()

@@ -9,11 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using windowsForms_client.Decorators;
 using windowsForms_client.Prototype;
 
 namespace windowsForms_client
 {
-    public abstract class Tank
+    public abstract class Tank : ITankComponent
     {
         //Base values
         public string playerId { get; set; }
@@ -195,5 +196,36 @@ namespace windowsForms_client
         public abstract void Shoot();
         public abstract void StartShooting();
         public abstract void StopShooting();
+
+        public int GetHealth()
+        {
+            return health;
+        }
+
+        public int GetXSpeed()
+        {
+            return MovementSpeedX;
+        }
+
+        public int GetYSpeed()
+        {
+            return MovementSpeedY;
+        }
+
+        public ITankComponent ApplyUpgrade(string upgradeType)
+        {
+            switch (upgradeType)
+            {
+                case "Gold":
+                    return new HealthDecorator(this);
+                case "Diamond":
+                    return new SpeedYBoostDecorator(this);
+                case "Emerald":
+                    return new SpeedXBoostDecorator(this);
+                default:
+                    Console.WriteLine("Unknown upgrade type.");
+                    return this;
+            }
+        }
     }
 }

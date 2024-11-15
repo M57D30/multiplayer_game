@@ -11,7 +11,7 @@ namespace windowsForms_client
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TankProperties());
-            //Application.Run(new MainForm()); // Ensure this points to your MainForm
+            Application.Run(new Form()); // Ensure this points to your MainForm
         }
     }
 }

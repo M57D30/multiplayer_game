@@ -30,6 +30,14 @@ namespace windowsForms_client
             this.Hide();
         }
 
-      
+        private void TankProperties_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Upgrade_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
