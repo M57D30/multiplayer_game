@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace windowsForms_client
+﻿namespace windowsForms_client
 {
     partial class TankProperties
     {
@@ -35,7 +32,9 @@ namespace windowsForms_client
             button1 = new Button();
             Upgrade = new ComboBox();
             label1 = new Label();
+            ControlType = new ComboBox();  // Declare here to make it accessible within InitializeComponent
             SuspendLayout();
+
             // 
             // TankType
             // 
@@ -80,6 +79,22 @@ namespace windowsForms_client
             label1.TabIndex = 4;
             label1.Text = "Select one upgrade to receive every 10 seconds:";
             // 
+            // ControlType
+            // 
+            ControlType.DropDownStyle = ComboBoxStyle.DropDownList;
+            ControlType.FormattingEnabled = true;
+            ControlType.Items.AddRange(new object[] { "Keyboard", "Mouse" });
+            ControlType.Location = new Point(455, 200);  // Position it below the TankType combo box
+            ControlType.Margin = new Padding(4, 3, 4, 3);
+            ControlType.Name = "ControlType";
+            ControlType.Size = new Size(170, 23);
+            ControlType.TabIndex = 5;
+            ControlType.SelectedIndex = 0; // Set default to Keyboard
+
+            // Add ControlType to the form's controls
+            Controls.Add(ControlType);  // This was missing in your original code
+
+            // 
             // TankProperties
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -96,12 +111,12 @@ namespace windowsForms_client
             PerformLayout();
         }
 
-
         #endregion
 
         private System.Windows.Forms.ComboBox TankType;
         private Button button1;
         private ComboBox Upgrade;
         private Label label1;
+        private ComboBox ControlType;  // Declare the ComboBox here
     }
 }

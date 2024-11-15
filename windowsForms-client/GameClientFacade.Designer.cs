@@ -2,7 +2,7 @@
 
 namespace windowsForms_client
 {
-    partial class GameClient
+    partial class GameClientFacade
     {
         /// <summary>
         /// Required designer variable.

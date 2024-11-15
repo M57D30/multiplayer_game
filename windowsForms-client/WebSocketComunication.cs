@@ -1,34 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.Json;
 using System.Timers;
-using System.Windows.Forms;
 using windowsForms_client.AbstractFactoryPatternn.Factorys;
 using windowsForms_client.AbstractFactoryPatternn;
+using System.Windows.Forms;
 using System.Text.Json.Serialization;
-using System.Text.Json;
 
 namespace windowsForms_client
 {
     internal class WebSocketComunication
     {
-        private ClientWebSocket clientSocket;
-        private GameClient client;
-        string tankType;
-        string selectedUpgrade;
+        private static WebSocketComunication _instance;
+        private static readonly object _lock = new object();  // Lock for thread-safety
 
-        public WebSocketComunication(string tankType, string selectedUpgrade, GameClient gameClient)
+        private ClientWebSocket clientSocket;
+        private GameClientFacade client;
+        private string tankType;
+        private string selectedUpgrade;
+
+        private WebSocketComunication(string tankType, string selectedUpgrade, GameClientFacade gameClient)
         {
             this.tankType = tankType;
             this.client = gameClient;
             this.selectedUpgrade = selectedUpgrade;
-            Task.Run(ConnectWebSocket);
-            
-          
+            Task.Run(ConnectWebSocket); // Start WebSocket connection asynchronously
+        }
+
+        // Singleton Instance
+        public static WebSocketComunication Instance(string tankType, string selectedUpgrade, GameClientFacade gameClient)
+        {
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new WebSocketComunication(tankType, selectedUpgrade, gameClient);
+                }
+                return _instance;
+            }
         }
 
         private async Task ConnectWebSocket()
@@ -37,8 +49,7 @@ namespace windowsForms_client
             await clientSocket.ConnectAsync(new Uri("ws://localhost:5000/ws"), CancellationToken.None);
             Console.WriteLine("Connected to server");
 
-
-            ////////Tokie patys ID's kaip ir serveri
+            // Receive Player ID and tank color
             var buffer = new byte[1024];
             var result = await clientSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             string playerId = Encoding.UTF8.GetString(buffer, 0, result.Count);
@@ -46,25 +57,23 @@ namespace windowsForms_client
             buffer = new byte[1024];
             result = await clientSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             string tankColor = Encoding.UTF8.GetString(buffer, 0, result.Count);
-            
+
             await SendSelectedUpgrade();
 
             client.InitializeTank(tankType, tankColor, playerId);
             await ReceiveUpdates();
         }
 
-
         public async Task SendSelectedUpgrade()
         {
             if (clientSocket.State == WebSocketState.Open && selectedUpgrade != "-")
             {
-                var message = $"SubscribeUpgrade,{selectedUpgrade}"; // Create a message to send
+                var message = $"SubscribeUpgrade,{selectedUpgrade}";
                 var buffer = Encoding.UTF8.GetBytes(message);
                 await clientSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
                 Console.WriteLine($"Sent upgrade subscription: {selectedUpgrade}");
             }
         }
-
 
         private SemaphoreSlim _sendSemaphore = new SemaphoreSlim(1, 1);
         public async Task SendTankInformation(Tank currentTank)
@@ -80,20 +89,16 @@ namespace windowsForms_client
                     var buffer = Encoding.UTF8.GetBytes(message);
                     await clientSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
                 }
-               
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error sending message: {ex.Message}"); // Debug log
+                Console.WriteLine($"Error sending message: {ex.Message}");
             }
             finally
             {
                 _sendSemaphore.Release(); // Always release the semaphore
             }
         }
-
-      
-      
 
         private async Task ReceiveUpdates()
         {
@@ -141,13 +146,11 @@ namespace windowsForms_client
 
                     if (message.StartsWith("Remove"))
                     {
-                        // Extract player ID from the message
                         string playerIdToRemove = message.Split(',')[1];
                         Console.WriteLine($"Removing player with ID: {playerIdToRemove}");
-                        client.RemovePlayer(playerIdToRemove); // Call method to remove the player by ID
-                        continue; // Skip processing the rest of the message
+                        client.RemovePlayer(playerIdToRemove);
+                        continue;
                     }
-
 
                     try
                     {
@@ -156,39 +159,32 @@ namespace windowsForms_client
                     }
                     catch (JsonException ex)
                     {
-                        Console.WriteLine($"JSON deserialization error: {ex.Message}"); // Debug log
-                    }       
+                        Console.WriteLine($"JSON deserialization error: {ex.Message}");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception in ReceiveUpdates: {ex.Message}"); // Debug log
-
+                    Console.WriteLine($"Exception in ReceiveUpdates: {ex.Message}");
                 }
             }
-
         }
 
         public async Task SendAsyncClosing()
         {
             if (clientSocket.State == WebSocketState.Open)
             {
-                
                 await clientSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
             }
         }
-
 
         private class TankConverter : JsonConverter<Tank>
         {
             public override Tank Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-
                 using (JsonDocument doc = JsonDocument.ParseValue(ref reader))
                 {
-                    
                     var root = doc.RootElement;
                     var tankType = root.GetProperty("TankType").GetString();
-                    // Determine the specific type of tank
                     Type actualType = Type.GetType($"windowsForms_client.Tanks.{tankType}");
 
                     if (actualType == null)
@@ -196,17 +192,14 @@ namespace windowsForms_client
                         throw new JsonException($"Unknown tank type: {tankType}");
                     }
 
-                    // Deserialize into the appropriate subclass
                     return (Tank)JsonSerializer.Deserialize(root.GetRawText(), actualType, options);
                 }
             }
 
             public override void Write(Utf8JsonWriter writer, Tank value, JsonSerializerOptions options)
             {
-                // Serialize the entire object, including the type discriminator
                 JsonSerializer.Serialize(writer, value, value.GetType(), options);
             }
         }
     }
-
 }

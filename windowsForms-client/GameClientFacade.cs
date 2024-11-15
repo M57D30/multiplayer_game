@@ -17,12 +17,21 @@ using System.Runtime.CompilerServices;
 using windowsForms_client.Strategy;
 using windowsForms_client.Factory;
 using windowsForms_client.Prototype;
+using windowsForms_client.Adapter;
+using indowsForms_client.Adapter;
+using System.Security.AccessControl;
 
 namespace windowsForms_client
 
 {
-    public partial class GameClient : Form
+    public partial class GameClientFacade : Form
     {
+        private bool isMousePressed = false; 
+        private Point mousePosition;
+        private string controlType;
+
+
+        private IControl _controlAdapter;
         private Tank CurrentTank;
         private List<Tank> allPlayers = new List<Tank>();
         private System.Timers.Timer gameLoopTimer;
@@ -49,10 +58,12 @@ namespace windowsForms_client
 
 
 
-        public GameClient(string tankType, string selectedUpgrade)
+        public GameClientFacade(string tankType, string selectedUpgrade, string controlType)
         {
             InitializeComponent();
             PrintTankType(tankType);
+
+            this.controlType = controlType;
 
             gameTimer = new System.Timers.Timer(1000);
             gameTimer.Elapsed += OnGameTimerElapsed;
@@ -60,7 +71,11 @@ namespace windowsForms_client
 
             KeyDown += OnKeyDown;
             KeyUp += OnKeyUp;
-            webSocketComunication = new WebSocketComunication(tankType, selectedUpgrade, this);
+
+            MouseDown += OnMouseDownHandler;
+            MouseUp += OnMouseUpHandler;
+
+            webSocketComunication = WebSocketComunication.Instance(tankType, selectedUpgrade, this);
             this.FormClosing += GameClient_FormClosing;
             InitializeObstacles(); // Call to initialize obstacles
 
@@ -68,10 +83,9 @@ namespace windowsForms_client
             temporaryEffectTimer.Elapsed += OnTemporaryEffectTimerElapsed;
             temporaryEffectTimer.Start();
 
-            coinTimer= new System.Timers.Timer(2000); 
+            coinTimer = new System.Timers.Timer(2000);
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
-
         }
 
         // Initialize obstacles AND coind
@@ -200,6 +214,14 @@ namespace windowsForms_client
             
             Console.WriteLine(CurrentTank.getNameOfTank());
             allPlayers.Add(CurrentTank);
+            if(controlType == "Mouse")
+            {
+                _controlAdapter = new MouseControlAdapter(CurrentTank);
+            }
+            else
+            {
+                _controlAdapter = new KeyboardControlAdapter(CurrentTank);
+            }
             BeginGameLoop();
         }
 
@@ -213,41 +235,69 @@ namespace windowsForms_client
             gameLoopTimer.Start();
         }
 
-        
+
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (!CurrentTank.IsFrozen)
+
+            if (!CurrentTank.IsFrozen && this.controlType == "Keyboard")
             {
-                if (e.KeyCode == Keys.Up) CurrentTank.MoveUp();
-                if (e.KeyCode == Keys.Down) CurrentTank.MoveDown();
-                if (e.KeyCode == Keys.Left) CurrentTank.MoveLeft();
-                if (e.KeyCode == Keys.Right) CurrentTank.MoveRight();
+                if (e.KeyCode == Keys.Up) _controlAdapter.MoveUp();
+                if (e.KeyCode == Keys.Down) _controlAdapter.MoveDown();
+                if (e.KeyCode == Keys.Left) _controlAdapter.MoveLeft();
+                if (e.KeyCode == Keys.Right) _controlAdapter.MoveRight();
             }
 
             // Shoot when spacebar is pressed
             if (e.KeyCode == Keys.Space && !spacebarPressed && !CurrentTank.IsBulletFrozen)
             {
                 spacebarPressed = true;
-                CurrentTank.StartShooting();
+                _controlAdapter.Shoot();
             }
         }
 
 
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) CurrentTank.StopMovementY();
-            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right) CurrentTank.StopMovementX();
-
-            if (e.KeyCode == Keys.Space)
+            if (CurrentTank == null || _controlAdapter == null)
             {
-                CurrentTank.StopShooting(); // Stop shooting when space is released
-                spacebarPressed = false;
+                return; // Do nothing if CurrentTank or _controlAdapter is null
             }
+            if (this.controlType == "Keyboard")
+            {
+                if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) _controlAdapter.StopMovementY();
+                if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right) _controlAdapter.StopMovementX();
+
+                if (e.KeyCode == Keys.Space)
+                {
+                    _controlAdapter.StopShooting(); // Stop shooting when space is released
+                    spacebarPressed = false;
+                }
+            }
+              
         }
-       
+
 
         private async void OnGameLoop(object sender, ElapsedEventArgs e)
         {
+           
+            if (isMousePressed)
+            {
+                // Calculate the direction based on mouse position and move the tank accordingly
+                int dx = mousePosition.X - CurrentTank.x_coordinate;
+                int dy = mousePosition.Y - CurrentTank.y_coordinate;
+
+                if (Math.Abs(dx) > Math.Abs(dy))
+                {
+                    if (dx > 0) _controlAdapter.MoveRight();
+                    else _controlAdapter.MoveLeft();
+                }
+                else
+                {
+                    if (dy > 0) _controlAdapter.MoveDown();
+                    else _controlAdapter.MoveUp();
+                }
+            }
+
             await this.Move();
 
             await this.Shoot();
@@ -258,6 +308,44 @@ namespace windowsForms_client
                 coin = clonedCoin;
             }
         }
+        private void OnMouseDownHandler(object sender, MouseEventArgs e)
+        {
+
+            if (e.Button == MouseButtons.Left && controlType == "Mouse")
+            {
+                isMousePressed = true;
+                mousePosition = e.Location;
+                _controlAdapter.Shoot();  // Shoot when mouse button is pressed
+            }
+        }
+
+        private void OnMouseUpHandler(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isMousePressed = false;
+            }
+        }
+        //protected override void OnMouseMove(MouseEventArgs e)
+        //{
+        //    base.OnMouseMove(e);
+
+        //    // Update the current mouse position
+        //    mousePosition = e.Location;
+
+        //    // Calculate the angle from the tank's position to the mouse position
+        //    if (CurrentTank != null)
+        //    {
+        //        float dx = mousePosition.X - CurrentTank.x_coordinate;
+        //        float dy = mousePosition.Y - CurrentTank.y_coordinate;
+        //        float angle = (float)(Math.Atan2(dy, dx) * (180 / Math.PI)); // Angle in degrees
+
+        //        // If your tank has a turret rotation property, set it here
+        //        CurrentTank.TurretAngle = angle;
+        //    }
+
+        //    Invalidate(); // Refresh to show turret rotation
+        //}
 
         private async Task Move()
         {
