@@ -13,6 +13,21 @@ namespace windowsForms_client.Factory
         public Snow(int x, int y, IStrategy strategy) : base(x, y, strategy)
         {
         }
-
+        public sealed override Color GetDefaultColor()
+        {
+            return Color.LightBlue;
+        }
+        protected sealed override void ApplyEffect(Tank tank)
+        {
+            if (!HasBeenAffected)
+            {
+                tank.StartFreeze();
+                HasBeenAffected = true; 
+            }
+        }
+        protected sealed override string LogEffectDetails()
+        {
+            return $"Tank is frozen for 5 seconds";
+        }
     }
 }

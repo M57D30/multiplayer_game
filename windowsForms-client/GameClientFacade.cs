@@ -79,10 +79,6 @@ namespace windowsForms_client
             this.FormClosing += GameClient_FormClosing;
             InitializeObstacles(); // Call to initialize obstacles
 
-            temporaryEffectTimer = new System.Timers.Timer(10000);
-            temporaryEffectTimer.Elapsed += OnTemporaryEffectTimerElapsed;
-            temporaryEffectTimer.Start();
-
             coinTimer = new System.Timers.Timer(2000);
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
@@ -105,10 +101,10 @@ namespace windowsForms_client
 
             foreach (var obstacle in obstacles)
             {
-                originalObstacleStates[obstacle] = (GetObstacleColor(obstacle), obstacle.Strategy);
+                obstacle.SetOriginalColor(obstacle.GetDefaultColor());
+                obstacle.SetTempColor(obstacle.GetDefaultColor());
+                originalObstacleStates[obstacle] = (obstacle.GetDefaultColor(), obstacle.Strategy);
             }
-            //PLEASE CHECK IF THIS CAUSES ERRORS TO U
-
             string imagePath = @"c:\pic\gold.jpg";
             Console.WriteLine(imagePath);
 
@@ -353,21 +349,8 @@ namespace windowsForms_client
 
             foreach (var obstacle in obstacles)
             {
-                if (IsCollidingWithObstacle(CurrentTank, obstacle))
-                {
-                    if (!obstacle.HasBeenAffected)
-                    {
-                        obstacle.Strategy.ApplyStrategy(CurrentTank);
-                        obstacle.HasBeenAffected = true;
-                    }
-                }
-                else
-                {
-                    if (obstacle.HasBeenAffected)
-                    {
-                        obstacle.HasBeenAffected = false; 
-                    }
-                }
+                obstacle.CheckAndApplyEffect(CurrentTank);
+
             }
 
             if (CurrentTank.x_coordinate != lastSentPosition.x || CurrentTank.y_coordinate != lastSentPosition.y)
@@ -377,13 +360,6 @@ namespace windowsForms_client
             }
         }
 
-
-        private bool IsCollidingWithObstacle(Tank tank, Obstacle obstacle)
-        {
-            Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
-            Rectangle obstacleRect = new Rectangle(obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
-            return tankRect.IntersectsWith(obstacleRect);
-        }
         private bool IsCollidingWithCoin(Tank tank, Coin coin)
         {
             Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
@@ -471,71 +447,6 @@ namespace windowsForms_client
             {
                 CurrentTank.UpdateShield(upgradeValue);
             }
-        }
-
-        private void OnTemporaryEffectTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            ApplyRandomStrategiesToObstacles();
-            Invalidate();
-            Task.Delay(5000).ContinueWith(_ =>
-            {
-                RevertObstacleStrategies();
-                Invalidate();
-                temporaryEffectTimer.Stop();
-                temporaryEffectTimer.Start();
-            });
-        }
-        private void RevertObstacleStrategies()
-        {
-            foreach (var obstacle in obstacles)
-            {
-                var originalState = originalObstacleStates[obstacle];
-                obstacle.Strategy = originalState.OriginalStrategy;
-                obstacle.SetTempColor(originalState.OriginalColor);
-            }
-        }
-        private void ApplyRandomStrategiesToObstacles()
-        {
-            Random random = new Random();
-            foreach (var obstacle in obstacles)
-            {
-                int randomIndex = random.Next(randomStrategies.Count);
-                obstacle.Strategy = randomStrategies[randomIndex];
-                obstacle.SetTempColor(Color.Magenta);
-            }
-        }
-        private Color GetObstacleColor(Obstacle obstacle)
-        {
-            if (obstacle is Mist)
-            {
-                obstacle.SetOriginalColor(Color.LightGray);
-                obstacle.SetTempColor(Color.LightGray);
-                return Color.LightGray;
-            }
-
-            if (obstacle is Mud)
-            {
-                obstacle.SetOriginalColor(Color.SaddleBrown);
-                obstacle.SetTempColor(Color.SaddleBrown);
-                return Color.SaddleBrown;
-            }
-
-            if (obstacle is Ice)
-            {
-                obstacle.SetOriginalColor(Color.LightSteelBlue);
-                obstacle.SetTempColor(Color.LightSteelBlue);
-                return Color.LightSteelBlue;
-            }
-
-            if (obstacle is Snow)
-            {
-                obstacle.SetOriginalColor(Color.LightBlue);
-                obstacle.SetTempColor(Color.LightBlue);
-                return Color.LightBlue;
-            }
-            obstacle.SetOriginalColor(Color.Black);
-            obstacle.SetTempColor(Color.Black);
-            return Color.Black;
         }
 
         protected override void OnPaint(PaintEventArgs e)
