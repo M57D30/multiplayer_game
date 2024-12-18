@@ -13,6 +13,22 @@ namespace windowsForms_client.Factory
         public Mist(int x, int y, IStrategy strategy) : base(x, y, strategy)
         {
         }
+        public sealed override Color GetDefaultColor()
+        {
+            return Color.LightGray;
+        }
+        protected sealed override void ApplyEffect(Tank tank)
+        {
+            if (!HasBeenAffected)
+            {
+                tank.StartBulletFreeze();
+                HasBeenAffected = true; 
+            }
+        }
+        protected sealed override string LogEffectDetails()
+        {
+            return $"Bullets are frozen for 5 seconds";
+        }
 
     }
 }
