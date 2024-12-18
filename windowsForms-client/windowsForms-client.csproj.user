@@ -5,6 +5,9 @@
     <Compile Update="GameClientFacade.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="CustomProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="TankProperties.cs">
       <SubType>Form</SubType>
     </Compile>
