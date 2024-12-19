@@ -91,11 +91,15 @@ namespace windowsForms_client
             this.FormClosing += GameClient_FormClosing;
             InitializeObstacles(); // Call to initialize obstacles
 
+
             temporaryEffectTimer = new System.Timers.Timer(10000);
             temporaryEffectTimer.Elapsed += OnTemporaryEffectTimerElapsed;
             temporaryEffectTimer.Start();
 
             coinTimer = new System.Timers.Timer(10000);
+
+            coinTimer = new System.Timers.Timer(2000);
+
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
 
@@ -121,6 +125,7 @@ namespace windowsForms_client
 
             while (obstacles.HasNext())
             {
+
                 Obstacle obstacle = obstacles.Next();
                 //originalObstacleStates[obstacle] = (GetObstacleColor(obstacle), obstacle.Strategy);
                 originalObstaclesStates.Add(obstacle, GetObstacleColor(obstacle), obstacle.Strategy);
@@ -133,6 +138,13 @@ namespace windowsForms_client
             //PLEASE CHECK IF THIS CAUSES ERRORS TO U
 
             string imagePath = @"Images\gold.jpg";
+
+                obstacle.SetOriginalColor(obstacle.GetDefaultColor());
+                obstacle.SetTempColor(obstacle.GetDefaultColor());
+                originalObstacleStates[obstacle] = (obstacle.GetDefaultColor(), obstacle.Strategy);
+            }
+            string imagePath = @"c:\pic\gold.jpg";
+
             Console.WriteLine(imagePath);
 
             //COMMENT THIS
@@ -391,6 +403,7 @@ namespace windowsForms_client
 
             while (obstacles.HasNext())
             {
+
                 Obstacle obstacle = obstacles.Next();
                 if (IsCollidingWithObstacle(CurrentTank, obstacle))
                 {
@@ -407,6 +420,9 @@ namespace windowsForms_client
                         obstacle.HasBeenAffected = false;
                     }
                 }
+
+                obstacle.CheckAndApplyEffect(CurrentTank);
+
             }
 
 
@@ -436,13 +452,6 @@ namespace windowsForms_client
             }
         }
 
-
-        private bool IsCollidingWithObstacle(Tank tank, Obstacle obstacle)
-        {
-            Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
-            Rectangle obstacleRect = new Rectangle(obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
-            return tankRect.IntersectsWith(obstacleRect);
-        }
         private bool IsCollidingWithCoin(Tank tank, Coin coin)
         {
             Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
@@ -533,6 +542,7 @@ namespace windowsForms_client
             }
         }
 
+
         private void OnTemporaryEffectTimerElapsed(object sender, ElapsedEventArgs e)
         {
             ApplyRandomStrategiesToObstacles();
@@ -619,6 +629,7 @@ namespace windowsForms_client
             obstacle.SetTempColor(Color.Black);
             return Color.Black;
         }
+
 
         protected override void OnPaint(PaintEventArgs e)
         {

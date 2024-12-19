@@ -7,7 +7,7 @@ using windowsForms_client.Strategy;
 
 namespace windowsForms_client
 {
-	public class Obstacle
+	public abstract class Obstacle
 	{
 		public int x_coordinate { get; set; }
 		public int y_coordinate { get; set; }
@@ -34,13 +34,49 @@ namespace windowsForms_client
         {
             return this.TempColor;
         }
-        public Color GetOriginalColor()
-        {
-            return this.OriginalColor;
-        }
         public void ResetColor()
         {
             TempColor = OriginalColor;
+        }
+
+        //TEMPLATE
+        public abstract Color GetDefaultColor();
+        protected abstract void ApplyEffect(Tank tank);
+        protected abstract string LogEffectDetails();
+        private void LogStep()
+        {
+            Console.WriteLine($"You stepped on a {this.GetType().Name}! - {LogEffectDetails()}");
+        }
+        public void CheckAndApplyEffect(Tank tank)
+        {
+            if (IsCollidingWithTank(tank))
+            {
+                if (!HasBeenAffected)  
+                {
+                    ApplyEffect(tank);
+                    LogStep(); 
+                }
+            }
+            else
+            {
+                if (HasBeenAffected)  
+                {
+                    ResetEffect(tank);
+                }
+            }
+        }
+        private bool IsCollidingWithTank(Tank tank)
+        {
+            Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
+            Rectangle obstacleRect = new Rectangle(this.x_coordinate, this.y_coordinate, 50, 50);
+            return tankRect.IntersectsWith(obstacleRect);
+        }
+        private void ResetEffect(Tank tank)
+        {
+            if (HasBeenAffected)
+            {
+                HasBeenAffected = false;
+            }
         }
     }
 }
