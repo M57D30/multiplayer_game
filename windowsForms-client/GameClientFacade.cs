@@ -21,6 +21,10 @@ using windowsForms_client.Adapter;
 using indowsForms_client.Adapter;
 using System.Security.AccessControl;
 using windowsForms_client.State;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using windowsForms_client.Interpreter;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace windowsForms_client
 
@@ -30,6 +34,9 @@ namespace windowsForms_client
         private bool isMousePressed = false; 
         private Point mousePosition;
         private string controlType;
+        
+        [DllImport("kernel32.dll")]
+        private static extern bool AllocConsole();
 
 
         private IControl _controlAdapter;
@@ -51,9 +58,10 @@ namespace windowsForms_client
         private int gamePhase = 1;
 
         private CustomProgressBar healthBar;
+        private CommandParser _commandParser;
 
 
-        public GameClientFacade(string tankType, string selectedUpgrade, string controlType)
+        public  GameClientFacade(string tankType, string selectedUpgrade, string controlType)
         {
             InitializeComponent();
             PrintTankType(tankType);
@@ -77,6 +85,11 @@ namespace windowsForms_client
             coinTimer = new System.Timers.Timer(2000);
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
+
+            //Interpreter
+            AllocConsole();
+            _commandParser = new CommandParser();
+            StartConsoleInput();
 
         }
 
@@ -109,6 +122,15 @@ namespace windowsForms_client
             Invalidate();
         }
 
+        public void ChangeTankColor(Color color)
+        {
+           CurrentTank.SetColor(color);
+        }
+        public int GetHealth()
+        {
+            return CurrentTank.Health;
+        }
+
         public void  UpdateSpecTank(CustomProgressBar healthBar, Tank tank)
         {
             healthBar.Value = Math.Max(0, Math.Min(tank.Health, 20));
@@ -124,6 +146,25 @@ namespace windowsForms_client
                 healthBar.BarColor = Color.Black;
             }
             healthBar.Invalidate();
+        }
+
+        private async Task StartConsoleInput()
+        {
+            var consoleThread = new Thread(async () =>
+            {
+                while (true)
+                {
+                    string input = Console.ReadLine();
+                    if (!string.IsNullOrEmpty(input))
+                    {
+                        _commandParser.ParseAndExecute(input, SynchronizationContext.Current, this);
+                        await webSocketComunication.SendTankInformation(CurrentTank);
+                    }
+                }
+            });
+
+            consoleThread.IsBackground = true;  // Make the thread a background thread
+            consoleThread.Start();
         }
 
         public void StartCountingTime()
@@ -440,7 +481,6 @@ namespace windowsForms_client
         public void RemovePlayer(string receivedTankId)
         {
             allPlayers.RemoveAll(t => t.playerId == receivedTankId);
-            Console.WriteLine("SOMEOME DICSONCET");
 
             Invalidate(); // Refresh the UI
         }

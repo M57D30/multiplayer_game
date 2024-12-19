@@ -22,7 +22,6 @@ namespace windowsForms_client
         public int y_coordinate { get; set; }
         private string nameOfTheTank { get; set; }
         public int Health { get; set; }
-
         public int MaxHealth { get; set; }
 
 
@@ -41,10 +40,8 @@ namespace windowsForms_client
         protected string[] TankTurretLookingDirections { get; set; }
         protected string TankTurretLookingDirection { get; set; } = "Right";
 
-        //For Json format
         public virtual string TankType => GetType().Name;
 
-        //Tank collor
         public Color Color { get; protected set; }
 
 
@@ -92,6 +89,10 @@ namespace windowsForms_client
                 this.Color = Color.Black;
             }
 
+        }
+        public void SetColor(Color color) 
+        {
+            this.Color = color;
         }
 
         public void TakeDamage(int damage)
