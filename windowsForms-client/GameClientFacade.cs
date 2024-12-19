@@ -20,6 +20,11 @@ using windowsForms_client.Prototype;
 using windowsForms_client.Adapter;
 using indowsForms_client.Adapter;
 using System.Security.AccessControl;
+using windowsForms_client.State;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using windowsForms_client.Interpreter;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace windowsForms_client
 
@@ -29,6 +34,9 @@ namespace windowsForms_client
         private bool isMousePressed = false; 
         private Point mousePosition;
         private string controlType;
+        
+        [DllImport("kernel32.dll")]
+        private static extern bool AllocConsole();
 
 
         private IControl _controlAdapter;
@@ -43,22 +51,17 @@ namespace windowsForms_client
         private System.Timers.Timer coinTimer;
         private int elapsedSeconds = 0;
 
-        private System.Timers.Timer temporaryEffectTimer;
         private List<Obstacle> obstacles = new List<Obstacle>();
-        private List<IStrategy> randomStrategies = new List<IStrategy>
-        {
-            new FastStrategy(),
-            new SlowStrategy(),
-            new StuckStrategy(),
-            new BlindnessStrategy()
-        };
+
         private Dictionary<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)> originalObstacleStates = new Dictionary<Obstacle, (Color, IStrategy)>();
         private Coin coin;
         private int gamePhase = 1;
 
+        private CustomProgressBar healthBar;
+        private CommandParser _commandParser;
 
 
-        public GameClientFacade(string tankType, string selectedUpgrade, string controlType)
+        public  GameClientFacade(string tankType, string selectedUpgrade, string controlType)
         {
             InitializeComponent();
             PrintTankType(tankType);
@@ -82,6 +85,12 @@ namespace windowsForms_client
             coinTimer = new System.Timers.Timer(2000);
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
+
+            //Interpreter
+            AllocConsole();
+            _commandParser = new CommandParser();
+            StartConsoleInput();
+
         }
 
         // Initialize obstacles AND coind
@@ -95,7 +104,7 @@ namespace windowsForms_client
             obstacles.Add(mistCreator.CreateObstacle(100, 100, new BlindnessStrategy()));
             obstacles.Add(mistCreator.CreateObstacle(600, 100, new BlindnessStrategy()));
             obstacles.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));    
-            obstacles.Add(iceCreator.CreateObstacle(600, 350, new FastStrategy()));    
+            obstacles.Add(iceCreator.CreateObstacle(600,  350, new FastStrategy()));    
             obstacles.Add(snowCreator.CreateObstacle(350, 150, new StuckStrategy()));
 
 
@@ -106,12 +115,56 @@ namespace windowsForms_client
                 originalObstacleStates[obstacle] = (obstacle.GetDefaultColor(), obstacle.Strategy);
             }
             string imagePath = @"c:\pic\gold.jpg";
-            Console.WriteLine(imagePath);
 
             //COMMENT THIS
             coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300), new CoinDetails(1, imagePath, Image.FromFile(imagePath)));
 
             Invalidate();
+        }
+
+        public void ChangeTankColor(Color color)
+        {
+           CurrentTank.SetColor(color);
+        }
+        public int GetHealth()
+        {
+            return CurrentTank.Health;
+        }
+
+        public void  UpdateSpecTank(CustomProgressBar healthBar, Tank tank)
+        {
+            healthBar.Value = Math.Max(0, Math.Min(tank.Health, 20));
+
+            if (tank.CurrentState.GetType() == typeof(Healthy))
+                healthBar.BarColor = Color.Green;
+            else if (tank.CurrentState.GetType() == typeof(Damaged))
+                healthBar.BarColor = Color.Orange;
+            else if (tank.CurrentState.GetType() == typeof(Critical))
+                healthBar.BarColor = Color.Red;
+            else
+            {
+                healthBar.BarColor = Color.Black;
+            }
+            healthBar.Invalidate();
+        }
+
+        private async Task StartConsoleInput()
+        {
+            var consoleThread = new Thread(async () =>
+            {
+                while (true)
+                {
+                    string input = Console.ReadLine();
+                    if (!string.IsNullOrEmpty(input))
+                    {
+                        _commandParser.ParseAndExecute(input, SynchronizationContext.Current, this);
+                        await webSocketComunication.SendTankInformation(CurrentTank);
+                    }
+                }
+            });
+
+            consoleThread.IsBackground = true;  // Make the thread a background thread
+            consoleThread.Start();
         }
 
         public void StartCountingTime()
@@ -142,8 +195,6 @@ namespace windowsForms_client
             Coin clonedCoin = coin.DeepCopy();
             coin = clonedCoin;
             gamePhase++;
-            Console.WriteLine(coin.Details.ImagePath);
-
             Invalidate();
         }
 
@@ -221,7 +272,6 @@ namespace windowsForms_client
             BeginGameLoop();
         }
 
-
         private void BeginGameLoop()
         {
             // Start the game loop (60 FPS -> 16ms interval)
@@ -230,7 +280,6 @@ namespace windowsForms_client
             gameLoopTimer.AutoReset = true;
             gameLoopTimer.Start();
         }
-
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
@@ -250,7 +299,6 @@ namespace windowsForms_client
                 _controlAdapter.Shoot();
             }
         }
-
 
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
@@ -272,13 +320,10 @@ namespace windowsForms_client
               
         }
 
-
         private async void OnGameLoop(object sender, ElapsedEventArgs e)
         {
-           
             if (isMousePressed)
             {
-                // Calculate the direction based on mouse position and move the tank accordingly
                 int dx = mousePosition.X - CurrentTank.x_coordinate;
                 int dy = mousePosition.Y - CurrentTank.y_coordinate;
 
@@ -304,6 +349,7 @@ namespace windowsForms_client
                 coin = clonedCoin;
             }
         }
+
         private void OnMouseDownHandler(object sender, MouseEventArgs e)
         {
 
@@ -372,28 +418,39 @@ namespace windowsForms_client
         {
             bool isBullet = false;
             // Shooting
-
             for (int i = CurrentTank.bullets.Count - 1; i >= 0; i--)
             {
-
                 isBullet = true;
                 var bullet = CurrentTank.bullets[i];
 
-                bullet.Move();
-                // Remove bullet if it's out of bounds
+                bullet.Move();  
+                foreach (var tank in allPlayers)
+                {
+                    if (tank != CurrentTank)
+                    {
+                        Rectangle bulletRect = new Rectangle(bullet.X, bullet.Y, 7, 7);
+                        Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
+
+                        if (bulletRect.IntersectsWith(tankRect))
+                        {
+                            tank.TakeDamage(1);
+                            UpdateSpecTank(healthBar, tank);
+                            CurrentTank.bullets.RemoveAt(i);
+                            await webSocketComunication.SendTankInformation(tank);
+                            break;
+                        }
+                    }
+                }
                 if (bullet.X > ClientSize.Width || bullet.X < 0 || bullet.Y > ClientSize.Height || bullet.Y < 0)
                 {
                     CurrentTank.bullets.RemoveAt(i);
                 }
-                
             }
             if (isBullet)
             {
                 await webSocketComunication.SendTankInformation(CurrentTank);
             }
-
         }
-
 
         public void UpdatePlayerPosition(Tank receivedTank)
         {
@@ -472,7 +529,6 @@ namespace windowsForms_client
                 }
             }
         }
-
 
         private void PrintTankType(string tankType)
         {

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 using windowsForms_client.Prototype;
+using windowsForms_client.State;
 
 namespace windowsForms_client
 {
@@ -20,7 +21,9 @@ namespace windowsForms_client
         public int x_coordinate { get; set; }
         public int y_coordinate { get; set; }
         private string nameOfTheTank { get; set; }
-        private int health { get; set; }
+        public int Health { get; set; }
+        public int MaxHealth { get; set; }
+
 
         //For movement
         private int playerVelocityX { get ; set; }
@@ -37,10 +40,8 @@ namespace windowsForms_client
         protected string[] TankTurretLookingDirections { get; set; }
         protected string TankTurretLookingDirection { get; set; } = "Right";
 
-        //For Json format
         public virtual string TankType => GetType().Name;
 
-        //Tank collor
         public Color Color { get; protected set; }
 
 
@@ -49,12 +50,20 @@ namespace windowsForms_client
         private System.Timers.Timer freezeTimer = new System.Timers.Timer(3000);
         private System.Timers.Timer freezebulletsTimer = new System.Timers.Timer(3000);
 
+        private IState _currentState;
+        public IState CurrentState
+        {
+            get { return _currentState; }
+            private set { _currentState = value; }
+        }
 
         public Tank() 
         {
             freezeTimer.Elapsed += OnFreezeTimerElapsed;
             freezebulletsTimer.Elapsed += OnFreezeBulletTimerElapsed;
-
+            this.MaxHealth = 20;
+            this.Health = MaxHealth;
+            _currentState = new Healthy();
         }
 
         public Tank(string id, int x, int y, string name)
@@ -67,8 +76,32 @@ namespace windowsForms_client
             this.nameOfTheTank = name;
             freezeTimer.Elapsed += OnFreezeTimerElapsed; 
             freezebulletsTimer.Elapsed += OnFreezeBulletTimerElapsed;
+            this.MaxHealth = 20; 
+            this.Health = MaxHealth;
+            _currentState = new Healthy();
 
         }
+        public void SetState(IState newState)
+        {
+            _currentState = newState;
+            if (_currentState.GetType() == typeof(Dead))
+            {
+                this.Color = Color.Black;
+            }
+
+        }
+        public void SetColor(Color color) 
+        {
+            this.Color = color;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Console.WriteLine($"{this.TankType} took damage, now health is {Health - damage}");
+            Health = Math.Max(Health - damage, 0);
+            _currentState.HandleChange(this);
+        }
+
 
         public void StartFreeze()
         {
@@ -124,7 +157,7 @@ namespace windowsForms_client
         {
 
         }
-
+        
 
 
         public string getNameOfTank()
