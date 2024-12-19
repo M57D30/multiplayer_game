@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using windowsForms_client.Flyweight;
 
 namespace windowsForms_client.Tanks
 {
@@ -24,10 +25,9 @@ namespace windowsForms_client.Tanks
             ShootingTimer.Elapsed += (sender, e) => Shoot();
         }
 
-        public override void setBullets(int bulletSpeed)
+        public override void setBullets(string tankTypeBullet)
         {
-            string Id = Guid.NewGuid().ToString();
-            this.bullet = new Bullet(bulletSpeed, Id, 0, 0);
+            BulletFactory.getBullet(tankTypeBullet);
         }
 
         public override void setTurretLookingDirections(string[] directions)
@@ -64,11 +64,23 @@ namespace windowsForms_client.Tanks
         {
             ShootInADirection();
 
-            this.bullet.Direction = TankTurretLookingDirection;
-            this.bullet.SetBaseBulletPosition(x_coordinate, y_coordinate);
-            bullets.Add(this.bullet);
+            IFlyweightBullet baseTommyGunBullet = BulletFactory.getBullet("TommyGun");
 
-            
+            string Id = Guid.NewGuid().ToString();
+            Bullet newBullet = baseTommyGunBullet.Create(Id, x_coordinate, y_coordinate, TankTurretLookingDirection, 0, 0);
+
+             bullets.Add(newBullet);
+
+            //bullets2.Add(newBullet);
+        }
+
+
+        public override void UpdateShooting(int value)
+        {
+            IFlyweightBullet baseTommyGunBullet = BulletFactory.getBullet("TommyGun");
+
+            baseTommyGunBullet.UpdateShooting(value);
+
         }
 
     }

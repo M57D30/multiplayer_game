@@ -25,7 +25,7 @@ namespace windowsForms_client.BuilderPattern
 
         public void AddSlowBullets()
         {
-            tank.setBullets(10);
+            tank.setBullets("TommyGun");
         }
 
         public void AddTwoDirectionTurret()
