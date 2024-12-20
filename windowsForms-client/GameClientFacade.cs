@@ -28,7 +28,9 @@ using static System.Windows.Forms.LinkLabel;
 using System.Numerics;
 using Iterator.Collections;
 using Iterator.Iterators;
+using windowsForms_client.Composite;
 using windowsForms_client.Iterator.Collections;
+using System.Security.Policy;
 
 using windowsForms_client.State;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
@@ -81,9 +83,21 @@ namespace windowsForms_client
         private Coin coin;
         private int gamePhase = 1;
 
+        MineZone ZoneA = new MineZone("Zone A", 0, 0, Color.White);
+        MineZone ZoneB = new MineZone("Zone B", 0, 0, Color.White);
+        MineZone ZoneC = new MineZone("Zone C", 0, 0, Color.White);
+        MineZone ZoneD = new MineZone("Zone D", 0, 0, Color.White);
+        private MineZone AllZones = new MineZone("AllZones", 0, 0, Color.White);
+        private int currentZoneIndex = 0;
+        private System.Timers.Timer zoneATimer;
+        private System.Timers.Timer zoneBTimer;
+        private System.Timers.Timer zoneCTimer;
+        private System.Timers.Timer zoneDTimer;
+        private System.Timers.Timer allZonesTimer;
+        private List<MineZone> listZones = new List<MineZone>();
+
         private CustomProgressBar healthBar;
         private CommandParser _commandParser;
-
 
         public  GameClientFacade(string tankType, string selectedUpgrade, string controlType)
         {
@@ -118,6 +132,25 @@ namespace windowsForms_client
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
 
+            zoneATimer = new System.Timers.Timer(2000);
+            zoneATimer.Elapsed += OnZoneATimerElapsed;
+            zoneATimer.Start();
+
+            zoneBTimer = new System.Timers.Timer(4000);
+            zoneBTimer.Elapsed += OnZoneBTimerElapsed;
+            zoneBTimer.Start();
+
+            zoneCTimer = new System.Timers.Timer(8000);
+            zoneCTimer.Elapsed += OnZoneCTimerElapsed;
+            zoneCTimer.Start();
+
+            zoneDTimer = new System.Timers.Timer(10000);
+            zoneDTimer.Elapsed += OnZoneDTimerElapsed;
+            zoneDTimer.Start();
+
+            allZonesTimer = new System.Timers.Timer(11000);
+            allZonesTimer.Elapsed += OnAllZonesTimerElapsed;
+            allZonesTimer.Start();
 
             IterateOverDictionary();
 
@@ -132,6 +165,65 @@ namespace windowsForms_client
         // Initialize obstacles AND coind
         public void InitializeObstacles()
         {
+            // Assuming the form's width and height
+            int formWidth = this.ClientSize.Width;
+            int formHeight = this.ClientSize.Height;
+
+            // Create an instance of MinePlacement
+            MinePlacement minePlacement = new MinePlacement(formWidth, formHeight);
+
+            Mine explosiveMine1 = new ExplosiveMine(minePlacement.GetRandomCoordinatesForZone("ZoneA").X, minePlacement.GetRandomCoordinatesForZone("ZoneA").Y, Color.Red);
+            Mine explosiveMine2 = new ExplosiveMine(minePlacement.GetRandomCoordinatesForZone("ZoneB").X, minePlacement.GetRandomCoordinatesForZone("ZoneB").Y, Color.Red);
+            Mine explosiveMine3 = new ExplosiveMine(minePlacement.GetRandomCoordinatesForZone("ZoneC").X, minePlacement.GetRandomCoordinatesForZone("ZoneC").Y, Color.Red);
+            Mine explosiveMine4 = new ExplosiveMine(minePlacement.GetRandomCoordinatesForZone("ZoneD").X, minePlacement.GetRandomCoordinatesForZone("ZoneD").Y, Color.Red);
+
+            Mine trapMine1 = new TrapMine(minePlacement.GetRandomCoordinatesForZone("ZoneA").X, minePlacement.GetRandomCoordinatesForZone("ZoneA").Y, Color.Brown);
+            Mine trapMine2 = new TrapMine(minePlacement.GetRandomCoordinatesForZone("ZoneB").X, minePlacement.GetRandomCoordinatesForZone("ZoneB").Y, Color.Brown);
+            Mine trapMine3 = new TrapMine(minePlacement.GetRandomCoordinatesForZone("ZoneC").X, minePlacement.GetRandomCoordinatesForZone("ZoneC").Y, Color.Brown);
+            Mine trapMine4 = new TrapMine(minePlacement.GetRandomCoordinatesForZone("ZoneD").X, minePlacement.GetRandomCoordinatesForZone("ZoneD").Y, Color.Brown);
+
+            Mine sensorMine1 = new SensorMine(minePlacement.GetRandomCoordinatesForZone("ZoneA").X, minePlacement.GetRandomCoordinatesForZone("ZoneA").Y, Color.Yellow);
+            Mine sensorMine2 = new SensorMine(minePlacement.GetRandomCoordinatesForZone("ZoneB").X, minePlacement.GetRandomCoordinatesForZone("ZoneB").Y, Color.Yellow);
+            Mine sensorMine3 = new SensorMine(minePlacement.GetRandomCoordinatesForZone("ZoneC").X, minePlacement.GetRandomCoordinatesForZone("ZoneC").Y, Color.Yellow);
+            Mine sensorMine4 = new SensorMine(minePlacement.GetRandomCoordinatesForZone("ZoneD").X, minePlacement.GetRandomCoordinatesForZone("ZoneD").Y, Color.Yellow);
+
+
+            ZoneA.Add(explosiveMine1);
+            ZoneA.Add(trapMine1);
+            ZoneA.Add(sensorMine1);
+
+
+            ZoneB.Add(explosiveMine2);
+            ZoneB.Add(trapMine2);
+            ZoneB.Add(sensorMine2);
+
+
+            ZoneC.Add(explosiveMine3);
+            ZoneC.Add(trapMine3);
+            ZoneC.Add(sensorMine3);
+
+
+            ZoneD.Add(explosiveMine4);
+            ZoneD.Add(trapMine4);
+            ZoneD.Add(sensorMine4);
+
+            AllZones.Add(ZoneA);
+            AllZones.Add(ZoneB);
+            AllZones.Add(ZoneC);
+            AllZones.Add(ZoneD);
+
+
+            listZones.Add(ZoneA);
+            listZones.Add(ZoneB);
+            listZones.Add(ZoneC);
+            listZones.Add(ZoneD);
+
+            MineZone zone1 = new MineZone("Zone 1", 0, 0, Color.Red);
+            Mine n1 = new ExplosiveMine(0, 0, Color.Red);
+            zone1.Add(n1);
+            zone1.Remove(n1);
+            zone1.Display();
+
             ObstacleCreator mistCreator = new MistCreator();
             ObstacleCreator mudCreator = new MudCreator();
             ObstacleCreator iceCreator = new IceCreator();
@@ -164,15 +256,6 @@ namespace windowsForms_client
 
             string imagePath = @"Images\gold.jpg";
 
-                obstacle.SetOriginalColor(obstacle.GetDefaultColor());
-                obstacle.SetTempColor(obstacle.GetDefaultColor());
-                originalObstacleStates[obstacle] = (obstacle.GetDefaultColor(), obstacle.Strategy);
-            }
-            string imagePath = @"c:\pic\gold.jpg";
-
-
-            Console.WriteLine(imagePath);
-
 
             //COMMENT THIS
             coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300), new CoinDetails(1, imagePath, Image.FromFile(imagePath)));
@@ -180,17 +263,63 @@ namespace windowsForms_client
             Invalidate();
         }
 
+        private void OnAllZonesTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+
+            AllZones.SetVisibility(false);
+            zoneATimer.Start();
+            zoneBTimer.Start();
+            zoneCTimer.Start();
+            zoneDTimer.Start();
+            Invalidate();
+        }
+
+        private void OnZoneATimerElapsed(object sender, ElapsedEventArgs e)
+        {
+
+            ZoneA.SetVisibility(true);
+            zoneATimer.Stop();
+            Invalidate();
+        }
+
+        private void OnZoneBTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+
+            ZoneB.SetVisibility(true);
+            zoneBTimer.Stop();
+            Invalidate();
+        }
+
+        private void OnZoneCTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+
+            ZoneC.SetVisibility(true);
+            zoneCTimer.Stop();
+            Invalidate();
+        }
+
+        private void OnZoneDTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+
+            ZoneD.SetVisibility(true);
+            zoneDTimer.Stop();
+            Invalidate();
+        }
+
 
         public void IterateOverDictionary()
         {
-            IIterator<KeyValuePair<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)>> originalOb = originalObstaclesStates.CreateIterator();
+            IIterator<KeyValuePair<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)>> originalOb =
+                originalObstaclesStates.CreateIterator();
 
             while (originalOb.HasNext())
             {
                 KeyValuePair<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)> obstacle = originalOb.Next();
 
-                Console.WriteLine($@"Original color: {obstacle.Value.OriginalColor}, Original Strategy: {obstacle.Value.OriginalStrategy}");
+                Console.WriteLine(
+                    $@"Original color: {obstacle.Value.OriginalColor}, Original Strategy: {obstacle.Value.OriginalStrategy}");
             }
+        }
 
         public void ChangeTankColor(Color color)
         {
@@ -471,45 +600,9 @@ namespace windowsForms_client
             {
 
                 Obstacle obstacle = obstacles.Next();
-                if (IsCollidingWithObstacle(CurrentTank, obstacle))
-                {
-                    if (!obstacle.HasBeenAffected)
-                    {
-                        obstacle.Strategy.ApplyStrategy(CurrentTank);
-                        obstacle.HasBeenAffected = true;
-                    }
-                }
-                else
-                {
-                    if (obstacle.HasBeenAffected)
-                    {
-                        obstacle.HasBeenAffected = false;
-                    }
-                }
-
                 obstacle.CheckAndApplyEffect(CurrentTank);
 
             }
-
-
-            //foreach (var obstacle in obstacles)
-            //{
-            //    if (IsCollidingWithObstacle(CurrentTank, obstacle))
-            //    {
-            //        if (!obstacle.HasBeenAffected)
-            //        {
-            //            obstacle.Strategy.ApplyStrategy(CurrentTank);
-            //            obstacle.HasBeenAffected = true;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (obstacle.HasBeenAffected)
-            //        {
-            //            obstacle.HasBeenAffected = false; 
-            //        }
-            //    }
-            //}
 
             if (CurrentTank.x_coordinate != lastSentPosition.x || CurrentTank.y_coordinate != lastSentPosition.y)
             {
@@ -536,12 +629,14 @@ namespace windowsForms_client
                 var bullet = CurrentTank.bullets[i];
 
 
-                bullet.Move();  
-                foreach (var tank in allPlayers)
+                bullet.Move();
+                IIterator<Tank> tanks = tankCollection.CreateIterator();
+                while (tanks.HasNext())
                 {
+                    Tank tank = tanks.Next();
                     if (tank != CurrentTank)
                     {
-                        Rectangle bulletRect = new Rectangle(bullet.X, bullet.Y, 7, 7);
+                        Rectangle bulletRect = new Rectangle((int)bullet.X, (int)bullet.Y, 7, 7);
                         Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
 
                         if (bulletRect.IntersectsWith(tankRect))
@@ -554,6 +649,7 @@ namespace windowsForms_client
                         }
                     }
                 }
+               
 
                 if (bullet.X > ClientSize.Width || bullet.X < 0 || bullet.Y > ClientSize.Height || bullet.Y < 0)
                 {
@@ -715,6 +811,21 @@ namespace windowsForms_client
         {
 
             base.OnPaint(e);
+
+            foreach (MineZone zone in listZones)
+            {
+                IIterator<Mine> currentZone = zone.CreateIterator();
+                while (currentZone.HasNext())
+                {
+                    Mine mine = currentZone.Next();
+                    if (mine.isVisible)
+                    {
+                        e.Graphics.FillEllipse(new SolidBrush(mine.Color), mine.x_coordinate, mine.y_coordinate, 20, 20);
+                    }
+                }
+            }
+
+
             IIterator<Obstacle> obstacles = obstaclesCollection.CreateIterator();
 
             while (obstacles.HasNext())
