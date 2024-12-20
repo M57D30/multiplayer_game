@@ -20,6 +20,7 @@ using windowsForms_client.Prototype;
 using windowsForms_client.Adapter;
 using indowsForms_client.Adapter;
 using System.Security.AccessControl;
+
 using static System.Windows.Forms.AxHost;
 using System.Diagnostics;
 using windowsForms_client.Flyweight;
@@ -31,6 +32,13 @@ using windowsForms_client.Composite;
 using windowsForms_client.Iterator.Collections;
 using System.Security.Policy;
 
+using windowsForms_client.State;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using windowsForms_client.Interpreter;
+using System.Runtime.InteropServices;
+using System.Threading;
+
+
 namespace windowsForms_client
 
 {
@@ -39,6 +47,9 @@ namespace windowsForms_client
         private bool isMousePressed = false; 
         private Point mousePosition;
         private string controlType;
+        
+        [DllImport("kernel32.dll")]
+        private static extern bool AllocConsole();
 
 
         private IControl _controlAdapter;
@@ -54,6 +65,7 @@ namespace windowsForms_client
         private System.Timers.Timer coinTimer;
         private int elapsedSeconds = 0;
 
+
         private System.Timers.Timer temporaryEffectTimer;
        // private List<Obstacle> obstacles = new List<Obstacle>();
 
@@ -67,6 +79,7 @@ namespace windowsForms_client
         };
        // private Dictionary<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)> originalObstacleStates = new Dictionary<Obstacle, (Color, IStrategy)>();
         private OriginalObstacleStatesCollection originalObstaclesStates = new OriginalObstacleStatesCollection();
+
         private Coin coin;
         private int gamePhase = 1;
 
@@ -83,7 +96,7 @@ namespace windowsForms_client
         private System.Timers.Timer allZonesTimer;
         private List<MineZone> listZones = new List<MineZone>();
 
-        public GameClientFacade(string tankType, string selectedUpgrade, string controlType)
+        public  GameClientFacade(string tankType, string selectedUpgrade, string controlType)
         {
             InitializeComponent();
             PrintTankType(tankType);
@@ -104,11 +117,15 @@ namespace windowsForms_client
             this.FormClosing += GameClient_FormClosing;
             InitializeObstacles(); // Call to initialize obstacles
 
+
             temporaryEffectTimer = new System.Timers.Timer(10000);
             temporaryEffectTimer.Elapsed += OnTemporaryEffectTimerElapsed;
             temporaryEffectTimer.Start();
 
             coinTimer = new System.Timers.Timer(10000);
+
+            coinTimer = new System.Timers.Timer(2000);
+
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
 
@@ -133,6 +150,13 @@ namespace windowsForms_client
             allZonesTimer.Start();
 
             IterateOverDictionary();
+
+            //Interpreter
+            AllocConsole();
+            _commandParser = new CommandParser();
+            StartConsoleInput();
+
+
         }
 
         // Initialize obstacles AND coind
@@ -202,6 +226,7 @@ namespace windowsForms_client
             ObstacleCreator iceCreator = new IceCreator();
             ObstacleCreator snowCreator = new SnowCreator();
 
+
             obstaclesCollection.Add(mistCreator.CreateObstacle(100, 100, new BlindnessStrategy()));
             obstaclesCollection.Add(mistCreator.CreateObstacle(600, 100, new BlindnessStrategy()));
             obstaclesCollection.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));
@@ -209,10 +234,12 @@ namespace windowsForms_client
             obstaclesCollection.Add(snowCreator.CreateObstacle(350, 150, new StuckStrategy()));
 
 
+
             IIterator<Obstacle> obstacles = obstaclesCollection.CreateIterator();
 
             while (obstacles.HasNext())
             {
+
                 Obstacle obstacle = obstacles.Next();
                 //originalObstacleStates[obstacle] = (GetObstacleColor(obstacle), obstacle.Strategy);
                 originalObstaclesStates.Add(obstacle, GetObstacleColor(obstacle), obstacle.Strategy);
@@ -225,7 +252,16 @@ namespace windowsForms_client
             //PLEASE CHECK IF THIS CAUSES ERRORS TO U
 
             string imagePath = @"Images\gold.jpg";
+
+                obstacle.SetOriginalColor(obstacle.GetDefaultColor());
+                obstacle.SetTempColor(obstacle.GetDefaultColor());
+                originalObstacleStates[obstacle] = (obstacle.GetDefaultColor(), obstacle.Strategy);
+            }
+            string imagePath = @"c:\pic\gold.jpg";
+
+
             Console.WriteLine(imagePath);
+
 
             //COMMENT THIS
             coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300), new CoinDetails(1, imagePath, Image.FromFile(imagePath)));
@@ -287,6 +323,51 @@ namespace windowsForms_client
 
                 Console.WriteLine($@"Original color: {obstacle.Value.OriginalColor}, Original Strategy: {obstacle.Value.OriginalStrategy}");
             }
+
+        public void ChangeTankColor(Color color)
+        {
+           CurrentTank.SetColor(color);
+        }
+        public int GetHealth()
+        {
+            return CurrentTank.Health;
+        }
+
+        public void  UpdateSpecTank(CustomProgressBar healthBar, Tank tank)
+        {
+            healthBar.Value = Math.Max(0, Math.Min(tank.Health, 20));
+
+            if (tank.CurrentState.GetType() == typeof(Healthy))
+                healthBar.BarColor = Color.Green;
+            else if (tank.CurrentState.GetType() == typeof(Damaged))
+                healthBar.BarColor = Color.Orange;
+            else if (tank.CurrentState.GetType() == typeof(Critical))
+                healthBar.BarColor = Color.Red;
+            else
+            {
+                healthBar.BarColor = Color.Black;
+            }
+            healthBar.Invalidate();
+        }
+
+        private async Task StartConsoleInput()
+        {
+            var consoleThread = new Thread(async () =>
+            {
+                while (true)
+                {
+                    string input = Console.ReadLine();
+                    if (!string.IsNullOrEmpty(input))
+                    {
+                        _commandParser.ParseAndExecute(input, SynchronizationContext.Current, this);
+                        await webSocketComunication.SendTankInformation(CurrentTank);
+                    }
+                }
+            });
+
+            consoleThread.IsBackground = true;  // Make the thread a background thread
+            consoleThread.Start();
+
         }
 
         public void StartCountingTime()
@@ -317,8 +398,6 @@ namespace windowsForms_client
             Coin clonedCoin = coin.DeepCopy();
             coin = clonedCoin;
             gamePhase++;
-            Console.WriteLine(coin.Details.ImagePath);
-
             Invalidate();
         }
 
@@ -396,7 +475,6 @@ namespace windowsForms_client
             BeginGameLoop();
         }
 
-
         private void BeginGameLoop()
         {
             // Start the game loop (60 FPS -> 16ms interval)
@@ -405,7 +483,6 @@ namespace windowsForms_client
             gameLoopTimer.AutoReset = true;
             gameLoopTimer.Start();
         }
-
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
@@ -425,7 +502,6 @@ namespace windowsForms_client
                 _controlAdapter.Shoot();
             }
         }
-
 
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
@@ -447,13 +523,10 @@ namespace windowsForms_client
               
         }
 
-
         private async void OnGameLoop(object sender, ElapsedEventArgs e)
         {
-           
             if (isMousePressed)
             {
-                // Calculate the direction based on mouse position and move the tank accordingly
                 int dx = mousePosition.X - CurrentTank.x_coordinate;
                 int dy = mousePosition.Y - CurrentTank.y_coordinate;
 
@@ -480,6 +553,7 @@ namespace windowsForms_client
                 coin = clonedCoin;
             }
         }
+
         private void OnMouseDownHandler(object sender, MouseEventArgs e)
         {
 
@@ -527,6 +601,7 @@ namespace windowsForms_client
 
             while (obstacles.HasNext())
             {
+
                 Obstacle obstacle = obstacles.Next();
                 if (IsCollidingWithObstacle(CurrentTank, obstacle))
                 {
@@ -543,6 +618,9 @@ namespace windowsForms_client
                         obstacle.HasBeenAffected = false;
                     }
                 }
+
+                obstacle.CheckAndApplyEffect(CurrentTank);
+
             }
 
 
@@ -572,13 +650,6 @@ namespace windowsForms_client
             }
         }
 
-
-        private bool IsCollidingWithObstacle(Tank tank, Obstacle obstacle)
-        {
-            Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
-            Rectangle obstacleRect = new Rectangle(obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
-            return tankRect.IntersectsWith(obstacleRect);
-        }
         private bool IsCollidingWithCoin(Tank tank, Coin coin)
         {
             Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
@@ -590,16 +661,32 @@ namespace windowsForms_client
         private async Task Shoot()
         {
             bool isBullet = false;
-           
 
             for (int i = CurrentTank.bullets.Count - 1; i >= 0; i--)
             {
-
                 isBullet = true;
                 var bullet = CurrentTank.bullets[i];
-                
-                bullet.Move();
-                // Remove bullet if it's out of bounds
+
+
+                bullet.Move();  
+                foreach (var tank in allPlayers)
+                {
+                    if (tank != CurrentTank)
+                    {
+                        Rectangle bulletRect = new Rectangle(bullet.X, bullet.Y, 7, 7);
+                        Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
+
+                        if (bulletRect.IntersectsWith(tankRect))
+                        {
+                            tank.TakeDamage(1);
+                            UpdateSpecTank(healthBar, tank);
+                            CurrentTank.bullets.RemoveAt(i);
+                            await webSocketComunication.SendTankInformation(tank);
+                            break;
+                        }
+                    }
+                }
+
                 if (bullet.X > ClientSize.Width || bullet.X < 0 || bullet.Y > ClientSize.Height || bullet.Y < 0)
                 {
                     CurrentTank.bullets.RemoveAt(i);
@@ -610,9 +697,7 @@ namespace windowsForms_client
             {
                 await webSocketComunication.SendTankInformation(CurrentTank);
             }
-
         }
-
 
         public void UpdatePlayerPosition(Tank receivedTank)
         {
@@ -668,6 +753,7 @@ namespace windowsForms_client
                 CurrentTank.UpdateShield(upgradeValue);
             }
         }
+
 
         private void OnTemporaryEffectTimerElapsed(object sender, ElapsedEventArgs e)
         {
@@ -756,6 +842,7 @@ namespace windowsForms_client
             return Color.Black;
         }
 
+
         protected override void OnPaint(PaintEventArgs e)
         {
 
@@ -822,8 +909,6 @@ namespace windowsForms_client
 
             //Test.Test1(e);
         }
-
-
 
         private void PrintTankType(string tankType)
         {
