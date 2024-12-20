@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using windowsForms_client.Flyweight;
 
 namespace windowsForms_client.Tanks
 {
     internal abstract class ShotgunTank : Tank
     {
-        List<Bullet> shotgunBullets = new List<Bullet>();
+       
 
         public ShotgunTank() 
         { 
@@ -24,9 +25,10 @@ namespace windowsForms_client.Tanks
         {
         }
 
-        public override void setBullets(List<Bullet> bullets)
+        public override void setBullets(string tankTypeBullet)
         {
-            this.shotgunBullets = bullets;
+            BulletFactory.getBullet(tankTypeBullet);
+
         }
 
         public override void setTurretLookingDirections(string[] directions)
@@ -68,12 +70,38 @@ namespace windowsForms_client.Tanks
         {
             ShootInADirection();
 
-            foreach (var b in this.shotgunBullets)
-            {
-                b.Direction = TankTurretLookingDirection;
-                b.SetBaseBulletPosition(x_coordinate, y_coordinate);
-                bullets.Add(b);
-            }
+
+            IFlyweightBullet baseShotgunBullet = BulletFactory.getBullet("Shotgun");
+
+            string Id0 = Guid.NewGuid().ToString();
+            Bullet newBullet1 = baseShotgunBullet.Create(Id0, x_coordinate, y_coordinate, TankTurretLookingDirection, -30, -30);
+            bullets.Add(newBullet1);
+
+            string Id1 = Guid.NewGuid().ToString();
+            Bullet newBullet2 = baseShotgunBullet.Create(Id1, x_coordinate, y_coordinate, TankTurretLookingDirection, -10, -10);
+            bullets.Add(newBullet2);
+
+            string Id2 = Guid.NewGuid().ToString();
+            Bullet newBullet3 = baseShotgunBullet.Create(Id2, x_coordinate, y_coordinate, TankTurretLookingDirection, 10, 10);
+            bullets.Add(newBullet3);
+
+            string Id3 = Guid.NewGuid().ToString();
+            Bullet newBullet4 = baseShotgunBullet.Create(Id3, x_coordinate, y_coordinate, TankTurretLookingDirection, 30, 30);
+            bullets.Add(newBullet4);
+
+
+
+
+        }
+
+
+        public override void UpdateShooting(int value)
+        {
+
+
+            IFlyweightBullet baseShotgunBullet = BulletFactory.getBullet("Shotgun");
+
+            baseShotgunBullet.UpdateShooting(value);
 
         }
 

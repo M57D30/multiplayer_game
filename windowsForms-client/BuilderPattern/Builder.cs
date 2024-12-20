@@ -9,10 +9,15 @@ namespace windowsForms_client.BuilderPattern
     public abstract class Builder
     {
         protected Tank tank { get; set; }
-
+        protected bool isBodyAssembled = false;
+        protected bool isTurretAdded = false;
 
         public Tank GetBuildable()
         {
+            if (!isBodyAssembled || !isTurretAdded)
+            {
+                throw new InvalidOperationException("Tank lacks body and turret.");
+            }
             return this.tank;
         }
 

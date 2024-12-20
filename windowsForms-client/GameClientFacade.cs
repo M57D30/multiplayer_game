@@ -20,11 +20,22 @@ using windowsForms_client.Prototype;
 using windowsForms_client.Adapter;
 using indowsForms_client.Adapter;
 using System.Security.AccessControl;
+
+using static System.Windows.Forms.AxHost;
+using System.Diagnostics;
+using windowsForms_client.Flyweight;
+using static System.Windows.Forms.LinkLabel;
+using System.Numerics;
+using Iterator.Collections;
+using Iterator.Iterators;
+using windowsForms_client.Iterator.Collections;
+
 using windowsForms_client.State;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using windowsForms_client.Interpreter;
 using System.Runtime.InteropServices;
 using System.Threading;
+
 
 namespace windowsForms_client
 
@@ -41,7 +52,8 @@ namespace windowsForms_client
 
         private IControl _controlAdapter;
         private Tank CurrentTank;
-        private List<Tank> allPlayers = new List<Tank>();
+        //private List<Tank> allPlayers = new List<Tank>();
+        private TankCollection tankCollection = new TankCollection();
         private System.Timers.Timer gameLoopTimer;
         private bool spacebarPressed = false;
         private (int x, int y) lastSentPosition;
@@ -51,9 +63,21 @@ namespace windowsForms_client
         private System.Timers.Timer coinTimer;
         private int elapsedSeconds = 0;
 
-        private List<Obstacle> obstacles = new List<Obstacle>();
 
-        private Dictionary<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)> originalObstacleStates = new Dictionary<Obstacle, (Color, IStrategy)>();
+        private System.Timers.Timer temporaryEffectTimer;
+       // private List<Obstacle> obstacles = new List<Obstacle>();
+
+        private ObstaclesCollection obstaclesCollection = new ObstaclesCollection();
+        private List<IStrategy> randomStrategies = new List<IStrategy>
+        {
+            new FastStrategy(),
+            new SlowStrategy(),
+            new StuckStrategy(),
+            new BlindnessStrategy()
+        };
+       // private Dictionary<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)> originalObstacleStates = new Dictionary<Obstacle, (Color, IStrategy)>();
+        private OriginalObstacleStatesCollection originalObstaclesStates = new OriginalObstacleStatesCollection();
+
         private Coin coin;
         private int gamePhase = 1;
 
@@ -82,14 +106,26 @@ namespace windowsForms_client
             this.FormClosing += GameClient_FormClosing;
             InitializeObstacles(); // Call to initialize obstacles
 
+
+            temporaryEffectTimer = new System.Timers.Timer(10000);
+            temporaryEffectTimer.Elapsed += OnTemporaryEffectTimerElapsed;
+            temporaryEffectTimer.Start();
+
+            coinTimer = new System.Timers.Timer(10000);
+
             coinTimer = new System.Timers.Timer(2000);
+
             coinTimer.Elapsed += OnCoinTimerElapsed;
             coinTimer.Start();
+
+
+            IterateOverDictionary();
 
             //Interpreter
             AllocConsole();
             _commandParser = new CommandParser();
             StartConsoleInput();
+
 
         }
 
@@ -101,26 +137,60 @@ namespace windowsForms_client
             ObstacleCreator iceCreator = new IceCreator();
             ObstacleCreator snowCreator = new SnowCreator();
 
-            obstacles.Add(mistCreator.CreateObstacle(100, 100, new BlindnessStrategy()));
-            obstacles.Add(mistCreator.CreateObstacle(600, 100, new BlindnessStrategy()));
-            obstacles.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));    
-            obstacles.Add(iceCreator.CreateObstacle(600,  350, new FastStrategy()));    
-            obstacles.Add(snowCreator.CreateObstacle(350, 150, new StuckStrategy()));
+
+            obstaclesCollection.Add(mistCreator.CreateObstacle(100, 100, new BlindnessStrategy()));
+            obstaclesCollection.Add(mistCreator.CreateObstacle(600, 100, new BlindnessStrategy()));
+            obstaclesCollection.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));
+            obstaclesCollection.Add(iceCreator.CreateObstacle(600, 350, new FastStrategy()));
+            obstaclesCollection.Add(snowCreator.CreateObstacle(350, 150, new StuckStrategy()));
 
 
-            foreach (var obstacle in obstacles)
+
+            IIterator<Obstacle> obstacles = obstaclesCollection.CreateIterator();
+
+            while (obstacles.HasNext())
             {
+
+                Obstacle obstacle = obstacles.Next();
+                //originalObstacleStates[obstacle] = (GetObstacleColor(obstacle), obstacle.Strategy);
+                originalObstaclesStates.Add(obstacle, GetObstacleColor(obstacle), obstacle.Strategy);
+            }
+
+            //foreach (var obstacle in obstacles)
+            //{
+            //    originalObstacleStates[obstacle] = (GetObstacleColor(obstacle), obstacle.Strategy);
+            //}
+            //PLEASE CHECK IF THIS CAUSES ERRORS TO U
+
+            string imagePath = @"Images\gold.jpg";
+
                 obstacle.SetOriginalColor(obstacle.GetDefaultColor());
                 obstacle.SetTempColor(obstacle.GetDefaultColor());
                 originalObstacleStates[obstacle] = (obstacle.GetDefaultColor(), obstacle.Strategy);
             }
             string imagePath = @"c:\pic\gold.jpg";
 
+
+            Console.WriteLine(imagePath);
+
+
             //COMMENT THIS
             coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300), new CoinDetails(1, imagePath, Image.FromFile(imagePath)));
 
             Invalidate();
         }
+
+
+        public void IterateOverDictionary()
+        {
+            IIterator<KeyValuePair<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)>> originalOb = originalObstaclesStates.CreateIterator();
+
+            while (originalOb.HasNext())
+            {
+                KeyValuePair<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)> obstacle = originalOb.Next();
+
+                Console.WriteLine($@"Original color: {obstacle.Value.OriginalColor}, Original Strategy: {obstacle.Value.OriginalStrategy}");
+            }
 
         public void ChangeTankColor(Color color)
         {
@@ -165,6 +235,7 @@ namespace windowsForms_client
 
             consoleThread.IsBackground = true;  // Make the thread a background thread
             consoleThread.Start();
+
         }
 
         public void StartCountingTime()
@@ -260,8 +331,8 @@ namespace windowsForms_client
             }
             
             Console.WriteLine(CurrentTank.getNameOfTank());
-            allPlayers.Add(CurrentTank);
-            if(controlType == "Mouse")
+            tankCollection.Add(CurrentTank);
+            if (controlType == "Mouse")
             {
                 _controlAdapter = new MouseControlAdapter(CurrentTank);
             }
@@ -342,6 +413,7 @@ namespace windowsForms_client
             await this.Move();
 
             await this.Shoot();
+            
 
             if (IsCollidingWithCoin(CurrentTank, coin))
             {
@@ -393,11 +465,51 @@ namespace windowsForms_client
         {
             CurrentTank.UpdatePosition(ClientSize.Width, ClientSize.Height);
 
-            foreach (var obstacle in obstacles)
+            IIterator<Obstacle> obstacles = obstaclesCollection.CreateIterator();
+
+            while (obstacles.HasNext())
             {
+
+                Obstacle obstacle = obstacles.Next();
+                if (IsCollidingWithObstacle(CurrentTank, obstacle))
+                {
+                    if (!obstacle.HasBeenAffected)
+                    {
+                        obstacle.Strategy.ApplyStrategy(CurrentTank);
+                        obstacle.HasBeenAffected = true;
+                    }
+                }
+                else
+                {
+                    if (obstacle.HasBeenAffected)
+                    {
+                        obstacle.HasBeenAffected = false;
+                    }
+                }
+
                 obstacle.CheckAndApplyEffect(CurrentTank);
 
             }
+
+
+            //foreach (var obstacle in obstacles)
+            //{
+            //    if (IsCollidingWithObstacle(CurrentTank, obstacle))
+            //    {
+            //        if (!obstacle.HasBeenAffected)
+            //        {
+            //            obstacle.Strategy.ApplyStrategy(CurrentTank);
+            //            obstacle.HasBeenAffected = true;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (obstacle.HasBeenAffected)
+            //        {
+            //            obstacle.HasBeenAffected = false; 
+            //        }
+            //    }
+            //}
 
             if (CurrentTank.x_coordinate != lastSentPosition.x || CurrentTank.y_coordinate != lastSentPosition.y)
             {
@@ -417,11 +529,12 @@ namespace windowsForms_client
         private async Task Shoot()
         {
             bool isBullet = false;
-            // Shooting
+
             for (int i = CurrentTank.bullets.Count - 1; i >= 0; i--)
             {
                 isBullet = true;
                 var bullet = CurrentTank.bullets[i];
+
 
                 bullet.Move();  
                 foreach (var tank in allPlayers)
@@ -441,10 +554,12 @@ namespace windowsForms_client
                         }
                     }
                 }
+
                 if (bullet.X > ClientSize.Width || bullet.X < 0 || bullet.Y > ClientSize.Height || bullet.Y < 0)
                 {
                     CurrentTank.bullets.RemoveAt(i);
                 }
+
             }
             if (isBullet)
             {
@@ -455,23 +570,24 @@ namespace windowsForms_client
         public void UpdatePlayerPosition(Tank receivedTank)
         {
             // Find existing player tank
-            var existingPlayer = allPlayers.FirstOrDefault(t => t.playerId == receivedTank.playerId);
-
+            var existingPlayer = tankCollection.FindPlayer(receivedTank.playerId);
+           // var existingPlayer = allPlayers.FirstOrDefault(t => t.playerId == receivedTank.playerId);
             if (existingPlayer != null)
             {
                 // Update properties of the existing player tank
                 existingPlayer.x_coordinate = receivedTank.x_coordinate; // Assuming Tank has a Position property
                 existingPlayer.y_coordinate = receivedTank.y_coordinate; // If your Tank class has a Rotation property
 
-                // Optionally, update bullets if necessary
-                existingPlayer.bullets.Clear(); // Clear existing bullets
+                existingPlayer.bullets.Clear();
                 existingPlayer.bullets.AddRange(receivedTank.bullets);
-                
+
+
             }
             else
             {
                 // Add new player tank
-                allPlayers.Add(receivedTank);
+                //allPlayers.Add(receivedTank);
+                tankCollection.Add(receivedTank);
             }
 
             Invalidate(); // Refresh the UI
@@ -480,8 +596,8 @@ namespace windowsForms_client
 
         public void RemovePlayer(string receivedTankId)
         {
-            allPlayers.RemoveAll(t => t.playerId == receivedTankId);
-
+            tankCollection.RemovePlayer(receivedTankId);
+            //allPlayers.RemoveAll(t => t.playerId == receivedTankId);
             Invalidate(); // Refresh the UI
         }
 
@@ -506,28 +622,145 @@ namespace windowsForms_client
             }
         }
 
+
+        private void OnTemporaryEffectTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            ApplyRandomStrategiesToObstacles();
+            Invalidate();
+            Task.Delay(5000).ContinueWith(_ =>
+            {
+                RevertObstacleStrategies();
+                Invalidate();
+                temporaryEffectTimer.Stop();
+                temporaryEffectTimer.Start();
+            });
+        }
+        private void RevertObstacleStrategies()
+        {
+            IIterator<Obstacle> obstacles = obstaclesCollection.CreateIterator();
+
+            while (obstacles.HasNext())
+            {
+                Obstacle obstacle = obstacles.Next();
+                //var originalState = originalObstacleStates[obstacle];
+                var originalState = originalObstaclesStates.Get(obstacle);
+                obstacle.Strategy = originalState.OriginalStrategy;
+                obstacle.SetTempColor(originalState.OriginalColor);
+            }
+
+            //foreach (var obstacle in obstacles)
+            //{
+            //    var originalState = originalObstacleStates[obstacle];
+            //    obstacle.Strategy = originalState.OriginalStrategy;
+            //    obstacle.SetTempColor(originalState.OriginalColor);
+            //}
+        }
+        private void ApplyRandomStrategiesToObstacles()
+        {
+            Random random = new Random();
+
+            IIterator<Obstacle> obstacles = obstaclesCollection.CreateIterator();
+
+            while (obstacles.HasNext())
+            {
+                Obstacle obstacle = obstacles.Next();
+                int randomIndex = random.Next(randomStrategies.Count);
+                obstacle.Strategy = randomStrategies[randomIndex];
+                obstacle.SetTempColor(Color.Magenta);
+            }
+
+            //foreach (var obstacle in obstacles)
+            //{
+            //    int randomIndex = random.Next(randomStrategies.Count);
+            //    obstacle.Strategy = randomStrategies[randomIndex];
+            //    obstacle.SetTempColor(Color.Magenta);
+            //}
+        }
+        private Color GetObstacleColor(Obstacle obstacle)
+        {
+            if (obstacle is Mist)
+            {
+                obstacle.SetOriginalColor(Color.LightGray);
+                obstacle.SetTempColor(Color.LightGray);
+                return Color.LightGray;
+            }
+
+            if (obstacle is Mud)
+            {
+                obstacle.SetOriginalColor(Color.SaddleBrown);
+                obstacle.SetTempColor(Color.SaddleBrown);
+                return Color.SaddleBrown;
+            }
+
+            if (obstacle is Ice)
+            {
+                obstacle.SetOriginalColor(Color.LightSteelBlue);
+                obstacle.SetTempColor(Color.LightSteelBlue);
+                return Color.LightSteelBlue;
+            }
+
+            if (obstacle is Snow)
+            {
+                obstacle.SetOriginalColor(Color.LightBlue);
+                obstacle.SetTempColor(Color.LightBlue);
+                return Color.LightBlue;
+            }
+            obstacle.SetOriginalColor(Color.Black);
+            obstacle.SetTempColor(Color.Black);
+            return Color.Black;
+        }
+
+
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
 
-            // Adding obstacles to the game
-            foreach (var obstacle in obstacles)
+            base.OnPaint(e);
+            IIterator<Obstacle> obstacles = obstaclesCollection.CreateIterator();
+
+            while (obstacles.HasNext())
             {
+                Obstacle obstacle = obstacles.Next();
                 e.Graphics.FillRectangle(new SolidBrush(obstacle.GetTempColor()), obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
             }
 
-            //COMMENT THIS
+            //foreach (var obstacle in obstacles)
+            //{
+            //    e.Graphics.FillRectangle(new SolidBrush(obstacle.GetTempColor()), obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
+            //}
+
             e.Graphics.DrawImage(coin.Details.image, coin.X, coin.Y, 10, 10);
 
-            foreach (var player in allPlayers.ToList())
+            IIterator<Tank> tankIterator = tankCollection.CreateIterator();
+
+            while (tankIterator.HasNext())
             {
+                Tank player = tankIterator.Next();
                 e.Graphics.FillRectangle(new SolidBrush(player.Color), player.x_coordinate, player.y_coordinate, 50, 50);
 
                 foreach (var bullet in player.bullets.ToList())
                 {
-                    e.Graphics.FillRectangle(new SolidBrush(player.Color), bullet.X, bullet.Y, bullet.Width, bullet.Height);
+                    bullet.Rotate(e.Graphics);
+                    e.Graphics.DrawImage(bullet.image, (float)bullet.X, (float)bullet.Y, bullet.Width, bullet.Height);
+                    e.Graphics.ResetTransform();
+                    //Image.FromFile(@"Images\PistolBullet.jpg")
                 }
+
             }
+
+            //foreach (var player in allPlayers.ToList())
+            //{
+            //    e.Graphics.FillRectangle(new SolidBrush(player.Color), player.x_coordinate, player.y_coordinate, 50, 50);
+
+            //    foreach (var bullet in player.bullets2.ToList())
+            //    {
+            //        bullet.Rotate(e.Graphics);
+            //        e.Graphics.DrawImage(bullet.image, (float)bullet.X, (float)bullet.Y, bullet.Width, bullet.Height);
+            //        e.Graphics.ResetTransform();
+            //        //Image.FromFile(@"Images\PistolBullet.jpg")
+            //    }
+            //}
+
+            //Test.Test1(e);
         }
 
         private void PrintTankType(string tankType)
@@ -543,6 +776,69 @@ namespace windowsForms_client
                
                 Console.WriteLine("TommyGun tank created.");
             }
+        }
+
+
+        public class Test
+        {
+            public static void Test1(PaintEventArgs e)
+            {
+                // Measure memory before rendering
+                long memoryBefore1 = GC.GetTotalMemory(true);
+                // Measure start time
+                var stopwatch1 = new System.Diagnostics.Stopwatch();
+
+                stopwatch1.Start();
+
+                // Setup the Flyweight bullets
+                IFlyweightBullet flyweightBase = BulletFactory.getBullet("TommyGun");
+                for (int i = 0; i < 1000; i++)
+                {
+                    string id = Guid.NewGuid().ToString();
+                    Bullet bullet = flyweightBase.Create(id, i * 10 % 800, i * 5 % 600, "Right", 0, 0);
+                }
+
+                // Stop the stopwatch
+                stopwatch1.Stop();
+
+                // Measure memory after rendering
+                long memoryAfter1 = GC.GetTotalMemory(false);
+
+                // Output results
+                Console.WriteLine($"Flyweight - Time Taken: {stopwatch1.ElapsedMilliseconds} ms");
+                Console.WriteLine($"Flyweight - Memory Used: {memoryAfter1 - memoryBefore1} bytes");
+
+
+
+
+                // Measure memory before rendering
+                long memoryBefore2 = GC.GetTotalMemory(true);
+                // Measure start time
+                var stopwatch2 = new System.Diagnostics.Stopwatch();
+
+                stopwatch2.Start();
+
+                // Setup the non-Flyweight bullets
+                for (int i = 0; i < 1000; i++)
+                {
+                    Bullet bullet = new Bullet(Image.FromFile(@"Images\TommyGunBullet.png"), "TommyGun", 10, Guid.NewGuid().ToString(),
+                        0, 0, i * 10 % 800, i * 5 % 600, "Right");
+                    e.Graphics.DrawImage(bullet.image, (float)bullet.X, (float)bullet.Y, bullet.Width, bullet.Height);
+                    
+                }
+
+                // Stop the stopwatch
+                stopwatch2.Stop();
+
+                // Measure memory after rendering
+                long memoryAfter2 = GC.GetTotalMemory(false);
+
+                // Output results
+                Console.WriteLine($"NONFlyweight - Time Taken: {stopwatch2.ElapsedMilliseconds} ms");
+                Console.WriteLine($"NONFlyweight - Memory Used: {memoryAfter2 - memoryBefore2} bytes");
+
+            }
+
         }
 
     }

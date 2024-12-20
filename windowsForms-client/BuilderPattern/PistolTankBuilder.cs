@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using windowsForms_client.Flyweight;
 
 namespace windowsForms_client.BuilderPattern
 {
@@ -16,7 +17,7 @@ namespace windowsForms_client.BuilderPattern
 
         public void AddFastBullets()
         {
-            tank.setBullets(20);
+            tank.setBullets("Pistol");
         }
 
         public void AddFastWheels()
@@ -44,6 +45,7 @@ namespace windowsForms_client.BuilderPattern
 
         public override Builder AssembleBody()
         {
+            this.isBodyAssembled = true;
             AddLightArmor();
             AddFastWheels();
             return this;
@@ -51,6 +53,7 @@ namespace windowsForms_client.BuilderPattern
 
         public override Builder AddTurret()
         {
+            this.isTurretAdded = true;
             AddFourDirectionTurret();
             return this;
         }

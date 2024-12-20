@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using windowsForms_client.Flyweight;
 using windowsForms_client.Tanks;
 
 namespace windowsForms_client.BuilderPattern
@@ -16,25 +17,8 @@ namespace windowsForms_client.BuilderPattern
 
         public void AddMediumBulletsMagazine()
         {
-            List<Bullet> bullets = new List<Bullet>();
 
-            string Id1 = Guid.NewGuid().ToString();
-            Bullet bullet1 = new Bullet(15, Id1, -30, -30);
-            bullets.Add(bullet1);
-
-            string Id2 = Guid.NewGuid().ToString();
-            Bullet bullet2 = new Bullet(15, Id2, -10, -10);
-            bullets.Add(bullet2);
-
-            string Id3 = Guid.NewGuid().ToString();
-            Bullet bullet3 = new Bullet(15, Id3, 10, 10);
-            bullets.Add(bullet3);
-
-            string Id4 = Guid.NewGuid().ToString();
-            Bullet bullet4 = new Bullet(15, Id4, 30, 30);
-            bullets.Add(bullet4);
-
-            tank.setBullets(bullets);
+            tank.setBullets("Shotgun");
         }
 
         public void AddMediumWheels()
@@ -63,6 +47,7 @@ namespace windowsForms_client.BuilderPattern
 
         public override Builder AddTurret()
         {
+            this.isTurretAdded = true;
             AddFourDirectionTurret();
             return this;
         }
@@ -75,6 +60,7 @@ namespace windowsForms_client.BuilderPattern
 
         public override Builder AssembleBody()
         {
+            this.isBodyAssembled = true;
             AddMediumArmor();
             AddMediumWheels();
             return this;

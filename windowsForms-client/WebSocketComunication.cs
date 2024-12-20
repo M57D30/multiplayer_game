@@ -9,6 +9,9 @@ using windowsForms_client.AbstractFactoryPatternn.Factorys;
 using windowsForms_client.AbstractFactoryPatternn;
 using System.Windows.Forms;
 using System.Text.Json.Serialization;
+using Iterator.Iterators;
+using windowsForms_client.Flyweight;
+using Iterator.Collections;
 
 namespace windowsForms_client
 {
@@ -155,6 +158,7 @@ namespace windowsForms_client
                     try
                     {
                         Tank receivedTank = JsonSerializer.Deserialize<Tank>(message, options);
+                    
                         client.UpdatePlayerPosition(receivedTank);
                     }
                     catch (JsonException ex)
@@ -192,14 +196,56 @@ namespace windowsForms_client
                         throw new JsonException($"Unknown tank type: {tankType}");
                     }
 
-                    return (Tank)JsonSerializer.Deserialize(root.GetRawText(), actualType, options);
+                    Tank tank = (Tank)JsonSerializer.Deserialize(root.GetRawText(), actualType, options);
+
+
+
+                    for (int i = 0; i < tank.bullets.Count; i++)
+                    {
+                        var originalBullet = tank.bullets[i];
+
+                        IFlyweightBullet flyweightBullet = BulletFactory.getBullet(originalBullet.BulletType);
+
+                        var newBullet = flyweightBullet.Create(originalBullet.Id, originalBullet.X, originalBullet.Y, originalBullet.Direction, originalBullet.X_aditional, originalBullet.Y_aditional);
+
+                        tank.bullets[i] = newBullet;
+                    }
+
+                    return tank;
                 }
             }
 
             public override void Write(Utf8JsonWriter writer, Tank value, JsonSerializerOptions options)
             {
-                JsonSerializer.Serialize(writer, value, value.GetType(), options);
+               JsonSerializer.Serialize(writer, value, value.GetType(), options);
+
             }
         }
+
+        //public class BulletCollectionConverter : JsonConverter<BulletCollection>
+        //{
+        //    public override BulletCollection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        //    {
+        //        BulletCollection bulletCollection = new BulletCollection();
+        //        using (JsonDocument doc = JsonDocument.ParseValue(ref reader))
+        //        {
+        //            var root = doc.RootElement;
+        //            var bulletsArray = root.GetProperty("Bullets").EnumerateArray();
+
+        //            foreach (var bulletElement in bulletsArray)
+        //            {
+        //                Bullet bullet = JsonSerializer.Deserialize<Bullet>(bulletElement.GetRawText(), options);
+        //                bulletCollection.Add(bullet);
+        //            }
+        //        }
+        //        return bulletCollection;
+        //    }
+
+        //    public override void Write(Utf8JsonWriter writer, BulletCollection value, JsonSerializerOptions options)
+        //    {
+        //        JsonSerializer.Serialize(writer, value., options);
+        //    }
+        //}
+
     }
 }

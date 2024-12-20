@@ -9,14 +9,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using Iterator.Collections;
 using windowsForms_client.Prototype;
+
+using static windowsForms_client.WebSocketComunication;
+
 using windowsForms_client.State;
+
 
 namespace windowsForms_client
 {
     public abstract class Tank
     {
         //Base values
+        public int previousX { get; set; } = 0;
+        public int previousY { get; set; } = 0;
         public string playerId { get; set; }
         public int x_coordinate { get; set; }
         public int y_coordinate { get; set; }
@@ -33,8 +40,8 @@ namespace windowsForms_client
         protected string TankBodyLookingDirection { get; set; }
 
         //For shooting 
-        public List<Bullet> bullets { get; set; }
-        protected Bullet bullet { get; set; }
+        public List<Bullet> bullets { get; set; } 
+       //protected Bullet bullet { get; set; }
         protected int ShootingInterval { get; set; }
         protected System.Timers.Timer ShootingTimer { get; set; }
         protected string[] TankTurretLookingDirections { get; set; }
@@ -59,6 +66,7 @@ namespace windowsForms_client
 
         public Tank() 
         {
+
             freezeTimer.Elapsed += OnFreezeTimerElapsed;
             freezebulletsTimer.Elapsed += OnFreezeBulletTimerElapsed;
             this.MaxHealth = 20;
@@ -69,7 +77,6 @@ namespace windowsForms_client
         public Tank(string id, int x, int y, string name)
         {
             this.bullets = new List<Bullet>();
-
             this.playerId = id;
             this.x_coordinate = x;
             this.y_coordinate = y;
@@ -139,10 +146,8 @@ namespace windowsForms_client
             this.MovementSpeedY += value;
         }
 
-        public void UpdateShooting(int value)
-        {
-            this.bullet.BulletSpeed += value;
-        }
+        public abstract void UpdateShooting(int value);
+
         public int GetTankSpeedX()
         {
             return MovementSpeedX;
@@ -207,7 +212,6 @@ namespace windowsForms_client
         }
 
 
-
         public void setMovementSpeed(int speedX, int speedY)
         {
             this.MovementSpeedX = speedX;
@@ -215,14 +219,11 @@ namespace windowsForms_client
         }
 
         public abstract void setTurretLookingDirections(string[] directions);
-        public virtual void setBullets(int bulletSpeed)
+        public virtual void setBullets(string tankTypeBullet)
         {
 
         }
-        public virtual void setBullets(List<Bullet> bulets)
-        {
-
-        }
+      
         public abstract void setShootingMechanism(int bulletSpeed);
         public abstract void ShootInADirection();
         public abstract void Shoot();
