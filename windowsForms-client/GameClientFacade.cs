@@ -96,6 +96,9 @@ namespace windowsForms_client
         private System.Timers.Timer allZonesTimer;
         private List<MineZone> listZones = new List<MineZone>();
 
+        private CustomProgressBar healthBar;
+        private CommandParser _commandParser;
+
         public  GameClientFacade(string tankType, string selectedUpgrade, string controlType)
         {
             InitializeComponent();
@@ -253,15 +256,6 @@ namespace windowsForms_client
 
             string imagePath = @"Images\gold.jpg";
 
-                obstacle.SetOriginalColor(obstacle.GetDefaultColor());
-                obstacle.SetTempColor(obstacle.GetDefaultColor());
-                originalObstacleStates[obstacle] = (obstacle.GetDefaultColor(), obstacle.Strategy);
-            }
-            string imagePath = @"c:\pic\gold.jpg";
-
-
-            Console.WriteLine(imagePath);
-
 
             //COMMENT THIS
             coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300), new CoinDetails(1, imagePath, Image.FromFile(imagePath)));
@@ -315,14 +309,17 @@ namespace windowsForms_client
 
         public void IterateOverDictionary()
         {
-            IIterator<KeyValuePair<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)>> originalOb = originalObstaclesStates.CreateIterator();
+            IIterator<KeyValuePair<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)>> originalOb =
+                originalObstaclesStates.CreateIterator();
 
             while (originalOb.HasNext())
             {
                 KeyValuePair<Obstacle, (Color OriginalColor, IStrategy OriginalStrategy)> obstacle = originalOb.Next();
 
-                Console.WriteLine($@"Original color: {obstacle.Value.OriginalColor}, Original Strategy: {obstacle.Value.OriginalStrategy}");
+                Console.WriteLine(
+                    $@"Original color: {obstacle.Value.OriginalColor}, Original Strategy: {obstacle.Value.OriginalStrategy}");
             }
+        }
 
         public void ChangeTankColor(Color color)
         {
@@ -603,45 +600,9 @@ namespace windowsForms_client
             {
 
                 Obstacle obstacle = obstacles.Next();
-                if (IsCollidingWithObstacle(CurrentTank, obstacle))
-                {
-                    if (!obstacle.HasBeenAffected)
-                    {
-                        obstacle.Strategy.ApplyStrategy(CurrentTank);
-                        obstacle.HasBeenAffected = true;
-                    }
-                }
-                else
-                {
-                    if (obstacle.HasBeenAffected)
-                    {
-                        obstacle.HasBeenAffected = false;
-                    }
-                }
-
                 obstacle.CheckAndApplyEffect(CurrentTank);
 
             }
-
-
-            //foreach (var obstacle in obstacles)
-            //{
-            //    if (IsCollidingWithObstacle(CurrentTank, obstacle))
-            //    {
-            //        if (!obstacle.HasBeenAffected)
-            //        {
-            //            obstacle.Strategy.ApplyStrategy(CurrentTank);
-            //            obstacle.HasBeenAffected = true;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (obstacle.HasBeenAffected)
-            //        {
-            //            obstacle.HasBeenAffected = false; 
-            //        }
-            //    }
-            //}
 
             if (CurrentTank.x_coordinate != lastSentPosition.x || CurrentTank.y_coordinate != lastSentPosition.y)
             {
@@ -668,12 +629,14 @@ namespace windowsForms_client
                 var bullet = CurrentTank.bullets[i];
 
 
-                bullet.Move();  
-                foreach (var tank in allPlayers)
+                bullet.Move();
+                IIterator<Tank> tanks = tankCollection.CreateIterator();
+                while (tanks.HasNext())
                 {
+                    Tank tank = tanks.Next();
                     if (tank != CurrentTank)
                     {
-                        Rectangle bulletRect = new Rectangle(bullet.X, bullet.Y, 7, 7);
+                        Rectangle bulletRect = new Rectangle((int)bullet.X, (int)bullet.Y, 7, 7);
                         Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
 
                         if (bulletRect.IntersectsWith(tankRect))
@@ -686,6 +649,7 @@ namespace windowsForms_client
                         }
                     }
                 }
+               
 
                 if (bullet.X > ClientSize.Width || bullet.X < 0 || bullet.Y > ClientSize.Height || bullet.Y < 0)
                 {
